@@ -1,6 +1,5 @@
 package com.apiflows;
 
-import com.apiflows.config.ApplicationProperty;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ApiFlowsApplication {
 
-    @Autowired
-    private ApplicationProperty applicationProperty;
 
     private final Logger log = LoggerFactory.getLogger(ApiFlowsApplication.class);
 
@@ -25,11 +22,4 @@ public class ApiFlowsApplication {
         log.info("Starting up");
     }
 
-    public ApplicationProperty getApplicationProperty() {
-        return applicationProperty;
-    }
-
-    public void setApplicationProperty(ApplicationProperty applicationProperty) {
-        this.applicationProperty = applicationProperty;
-    }
 }
