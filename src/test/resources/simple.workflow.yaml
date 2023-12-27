@@ -1,0 +1,41 @@
+workflowsSpec: 1.0.0
+info:
+  title: simple
+  version: v1
+  description: Simple workflow
+sourceDescriptions:
+  - name: pet-coupons
+    url: ./pet-coupons.openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: loginUser
+    summary: Login User
+    description: This workflow lays out the steps to login a user
+    inputs:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    steps:
+      - stepId: loginStep
+        description: This step demonstrates the user login step
+        operationId: loginUser
+        parameters:
+          # parameters to inject into the loginUser operation (parameter name must be resolvable at the referenced operation and the value is determined using {expression} syntax)
+          - name: username
+            in: query
+            value: $inputs.username
+          - name: password
+            in: query
+            value: $inputs.password
+        successCriteria:
+          # assertions to determine step was successful
+          - condition: $statusCode == 200
+        outputs:
+          # outputs from this step
+          tokenExpires: $response.header.X-Expires-After
+          rateLimit: $response.header.X-Rate-Limit
+    outputs:
+      tokenExpires: $steps.loginStep.outputs.tokenExpires
