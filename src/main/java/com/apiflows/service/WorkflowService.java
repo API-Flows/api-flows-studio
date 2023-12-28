@@ -14,31 +14,14 @@ public class WorkflowService {
 
     private OpenAPIWorkflowParser parser = new OpenAPIWorkflowParser();
 
-    public WorkflowView getWorkflow(String url) {
+    public WorkflowsSpecificationView get(String url) {
 
-        WorkflowView workflowView = new WorkflowView();
 
         OpenAPIWorkflow openAPIWorkflow = parse(url);
 
-        Workflow workflow = openAPIWorkflow.getWorkflows().get(0);
+        WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(openAPIWorkflow);
 
-        // metadata
-        workflowView.setTitle(openAPIWorkflow.getInfo().getTitle());
-        workflowView.setVersion(openAPIWorkflow.getInfo().getVersion());
-        workflowView.setDescription(openAPIWorkflow.getInfo().getDescription());
-
-        if(workflow.getInputs().getProperties() != null) {
-            workflowView.setInputsView(new InputsView(workflow.getInputs()));
-        }
-
-        for(Step step : workflow.getSteps()) {
-            workflowView.addStepView(new StepView(step));
-
-        }
-
-        workflowView.setOutputsView(new OutputsView(workflow.getOutputs()));
-
-        return workflowView;
+        return workflowsSpecificationView;
     }
 
     private OpenAPIWorkflow parse(String url) {

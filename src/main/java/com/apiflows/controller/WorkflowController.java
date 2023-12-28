@@ -1,7 +1,7 @@
 package com.apiflows.controller;
 
 import com.apiflows.model.FormDataDto;
-import com.apiflows.model.WorkflowView;
+import com.apiflows.model.WorkflowsSpecificationView;
 import com.apiflows.service.WorkflowService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +23,17 @@ public class WorkflowController {
     private final Logger log = LoggerFactory.getLogger(WorkflowController.class);
 
     @Autowired
-    private WorkflowService service;
+    private WorkflowService workflowService;
 
     @PostMapping("/view")
-    ResponseEntity<WorkflowView> view()  {
+    ResponseEntity<WorkflowsSpecificationView> view()  {
 
 //        String url = "https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml";
         String url = "./src/test/resources/simple.workflow.yaml";
 
-        WorkflowView workflowView = service.getWorkflow(url);
+        WorkflowsSpecificationView view = workflowService.get(url);
 
-        return new ResponseEntity<>(workflowView, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(view, HttpStatus.ACCEPTED);
 
     }
 
