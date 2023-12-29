@@ -4,6 +4,8 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+
 import InfoPopup from "./InfoPopup.js";
 import InputCard from "./InputCard.js";
 import StepCard from "./StepCard.js";
@@ -14,7 +16,7 @@ import OutputDetails from "./OutputDetails.js";
 
 import * as flows from "./Flow.js"
 
-const ComponentsTabViewer = ({ workflowsSpec }) => {
+const ComponentsTabViewer = ({ workflowsSpec, components }) => {
 
     const [selectedCard, setSelectedCard] = useState(null);
 
@@ -34,27 +36,19 @@ const ComponentsTabViewer = ({ workflowsSpec }) => {
                       {workflowsSpec.info.title} ({workflowsSpec.info.version}) <InfoPopup text={workflowsSpec.info.description}/>
                     </Typography>
             </Box>
-            <br/><br/><br/>
 
             <Box
                 display="flex"
                 flexDirection="row"
                 overflowX="auto"
                 gap={2}
-                justifyContent="center"
+                justifyContent="left"
             >
-                <Grid container spacing={1}>
-                {workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
-                    <>
-                    <Grid item xs={2}>
-                        -
-                    </Grid>
-                    <Grid item xs={10}>
-                        sourceDescription.name
-                    </Grid>
-                    </>
-                ))}
-                </Grid>
+                <pre>
+                    <Typography>
+                        {components}
+                    </Typography>
+                </pre>
             </Box>
 
             <br/><br/>

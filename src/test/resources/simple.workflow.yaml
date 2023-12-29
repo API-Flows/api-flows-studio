@@ -7,6 +7,8 @@ sourceDescriptions:
   - name: pet-coupons
     url: ./pet-coupons.openapi.yaml
     type: openapi
+  - name: pet-coupons
+    url: ./pet-coupons.openapi.yaml
 workflows:
   - workflowId: loginUser
     summary: Login User
@@ -39,3 +41,30 @@ workflows:
           rateLimit: $response.header.X-Rate-Limit
     outputs:
       tokenExpires: $steps.loginStep.outputs.tokenExpires
+components:
+  inputs:
+    apply_coupon_input:
+      type: object
+      properties:
+        my_pet_tags:
+          type: array
+          items:
+            type: string
+          description: Desired tags to use when searching for a pet, in CSV format (e.g. "puppy, dalmatian")
+        store_id:
+          $ref: "#/components/inputs/store_id"
+    buy_available_pet_input:
+      type: object
+      properties:
+        store_id:
+          $ref: "#/components/inputs/store_id"
+    store_id:
+      type: string
+      description: Indicates the domain name of the store where the customer is browsing or buying pets, e.g. "pets.example.com" or "pets.example.co.uk".
+  parameters:
+    page:
+      type: integer
+      format: int32
+    pageSize:
+      type: integer
+      format: int32

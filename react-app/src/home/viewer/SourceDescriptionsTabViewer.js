@@ -35,7 +35,7 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
                       {workflowsSpec.info.title} ({workflowsSpec.info.version}) <InfoPopup text={workflowsSpec.info.description}/>
                     </Typography>
             </Box>
-            <br/><br/>
+            <br/>
 
             {workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
                 <Box display="flex">

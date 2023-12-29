@@ -3,9 +3,19 @@ package com.apiflows.service;
 import com.apiflows.model.*;
 import com.apiflows.parser.OpenAPIWorkflowParser;
 import com.apiflows.parser.OpenAPIWorkflowParserResult;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import io.swagger.v3.core.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class WorkflowService {
@@ -16,10 +26,10 @@ public class WorkflowService {
 
     public WorkflowsSpecificationView get(String url) {
 
-
         OpenAPIWorkflow openAPIWorkflow = parse(url);
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(openAPIWorkflow);
+        workflowsSpecificationView.setComponentsAsString(getComponents(openAPIWorkflow));
 
         return workflowsSpecificationView;
     }
@@ -34,5 +44,46 @@ public class WorkflowService {
 
         return result.getOpenAPIWorkflow();
 
+    }
+
+    private String getComponents(OpenAPIWorkflow openAPIWorkflow) {
+
+        String components = null;
+
+        try {
+            ObjectMapper objectMapper = getObjectMapper(openAPIWorkflow.isJson());
+
+            JsonNode rootNode = objectMapper.readTree(openAPIWorkflow.getContent());
+
+            JsonNode componentsNode = rootNode.path("components");
+            if(componentsNode != null) {
+                components = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(componentsNode);
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return components;
+
+    }
+
+    private ObjectMapper getObjectMapper(boolean json) {
+        ObjectMapper objectMapper = null;
+        if (json) {
+            objectMapper =  new ObjectMapper();
+        } else {
+            YAMLFactory yamlFactory = new YAMLFactory();
+            yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
+            objectMapper = new ObjectMapper(yamlFactory);
+        }
+
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+
+        return objectMapper;
     }
 }

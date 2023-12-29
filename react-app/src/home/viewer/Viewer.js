@@ -18,11 +18,13 @@ import ComponentsTabViewer from "./ComponentsTabViewer.js"
 function Viewer() {
 
     const [workflowsSpec, setWorkflowsSpec] = useState(null);
+    const [components, setComponents] = useState(null);
 
     useEffect(() => {
         axios.post('/api/workflow/view')
           .then((response) => {
             setWorkflowsSpec(response.data.openAPIWorkflow);
+            setComponents(response.data.componentsAsString)
           })
           .catch((error) => {
             console.error('API request error:', error);
@@ -35,7 +37,7 @@ function Viewer() {
             <br/><br/>
             <Divider />
             <Container component="main" maxWidth="false">
-                <VerticalTabs workflowsSpec={workflowsSpec}/>
+                <VerticalTabs workflowsSpec={workflowsSpec} components={components}/>
             </Container>
             <Footer/>
         </>
@@ -76,7 +78,7 @@ function a11yProps(index) {
     };
 }
 
-const VerticalTabs = ({ workflowsSpec }) => {
+const VerticalTabs = ({ workflowsSpec, components }) => {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -107,7 +109,7 @@ const VerticalTabs = ({ workflowsSpec }) => {
                 <SourceDescriptionsTabViewer workflowsSpec={workflowsSpec} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ComponentsTabViewer workflowsSpec={workflowsSpec} />
+                <ComponentsTabViewer workflowsSpec={workflowsSpec} components={components}/>
             </TabPanel>
         </Box>
     );
