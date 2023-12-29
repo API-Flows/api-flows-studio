@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import InfoPopup from "./InfoPopup.js";
 import InputCard from "./InputCard.js";
@@ -42,7 +43,18 @@ const ComponentsTabViewer = ({ workflowsSpec }) => {
                 gap={2}
                 justifyContent="center"
             >
-                content
+                <Grid container spacing={1}>
+                {workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
+                    <>
+                    <Grid item xs={2}>
+                        -
+                    </Grid>
+                    <Grid item xs={10}>
+                        sourceDescription.name
+                    </Grid>
+                    </>
+                ))}
+                </Grid>
             </Box>
 
             <br/><br/>

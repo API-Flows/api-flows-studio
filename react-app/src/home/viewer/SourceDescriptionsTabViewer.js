@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+
 import InfoPopup from "./InfoPopup.js";
 import InputCard from "./InputCard.js";
 import StepCard from "./StepCard.js";
@@ -33,17 +35,20 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
                       {workflowsSpec.info.title} ({workflowsSpec.info.version}) <InfoPopup text={workflowsSpec.info.description}/>
                     </Typography>
             </Box>
-            <br/><br/><br/>
+            <br/><br/>
 
-            <Box
-                display="flex"
-                flexDirection="row"
-                overflowX="auto"
-                gap={2}
-                justifyContent="center"
-            >
-                content
-            </Box>
+            {workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
+                <Box display="flex">
+                    <Box justifyContent="right" sx={{ p: 1 }}>
+                    -
+                    </Box>
+                    <Box justifyContent="left" sx={{ p: 1 }}>
+                    <Typography>name: {sourceDescription.name}</Typography>
+                    <Typography>url:{sourceDescription.url}</Typography>
+                    {sourceDescription.type && <Typography>type: {sourceDescription.type}</Typography>}
+                    </Box>
+                </Box>
+            ))}
 
             <br/><br/>
         </>
