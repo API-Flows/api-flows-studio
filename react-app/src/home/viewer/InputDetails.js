@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
 const InputDetails = ({ inputs }) => {
     return (
@@ -14,22 +15,19 @@ const InputDetails = ({ inputs }) => {
 const ListProperties = ({ properties }) => {
     if (properties != null) {
         return (
-         <Grid container spacing={2} sx={{ border: '1px solid #ccc', padding: 2, textAlign: 'center' }}>
+        <>
+        <Divider/>
+         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
+            <table width="100%">
             {Object.entries(properties).map(([key, value]) => (
-                <>
-                <Grid item xs={2}>
-                    <Typography variant="body1" color="text.secondary" align="left">
-                        {key}:
-                    </Typography>
-                </Grid>
-                <Grid item xs={10}>
-                    <Typography variant="body1" color="text.secondary" align="left">
-                        {value.type}
-                    </Typography>
-                </Grid>
-                </>
+                <tr>
+                    <td align="right" width="20%"><Typography>{key}:</Typography></td>
+                    <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>
+                </tr>
             ))}
+            </table>
         </Grid>
+        </>
         );
     }
 }

@@ -41,6 +41,8 @@ workflows:
           rateLimit: $response.header.X-Rate-Limit
     outputs:
       tokenExpires: $steps.loginStep.outputs.tokenExpires
+      timex: $steps.loginStep.outputs.tokenExpiresdsdsdss
+      tokenExpdsdsdf: $steps.loginStep.outputs.test
 components:
   inputs:
     apply_coupon_input:

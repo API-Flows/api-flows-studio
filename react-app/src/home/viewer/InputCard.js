@@ -12,7 +12,8 @@ const InputCard = ({ onSelect, isSelected, workflow }) => {
                 minWidth: 150,
                 marginRight: 5,
                 background: isSelected ? '#f0f0f0' : '',
-                transform: isSelected ? 'scale(1.3)' : 'scale(1)'
+                transform: isSelected ? 'scale(1.3)' : 'scale(1)',
+                cursor: 'pointer',
             }}>
             <CardContent sx={{height: 100}}>
                 <Typography variant="h6" gutterBottom>
@@ -27,7 +28,7 @@ const InputCard = ({ onSelect, isSelected, workflow }) => {
 function Counter( {workflow} )  {
     return (
         <Typography variant="body1" color="text.secondary">
-          ({Object.keys(workflow.inputs.properties).length})
+          ({workflow.inputs.properties && Object.keys(workflow.inputs.properties).length})
         </Typography>
     );
 }

@@ -29,8 +29,8 @@ public class WorkflowController {
     ResponseEntity<WorkflowsSpecificationView> view()  {
 
 //        String url = "https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml";
-        String url = "./src/test/resources/simple.workflow.yaml";
-//        String url = "./src/test/resources/pet-coupons.workflow.yaml";
+//        String url = "./src/test/resources/simple.workflow.yaml";
+        String url = "./src/test/resources/pet-coupons.workflow.yaml";
 
         WorkflowsSpecificationView view = workflowService.get(url);
 

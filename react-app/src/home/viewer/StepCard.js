@@ -11,7 +11,8 @@ const StepCard = ({ index, onSelect, isSelected, stepId, operationId }) => {
             sx={{
                 minWidth: 150,
                 background: isSelected ? '#f0f0f0' : '',
-                transform: isSelected ? 'scale(1.3)' : 'scale(1)'
+                transform: isSelected ? 'scale(1.3)' : 'scale(1.0)',
+                cursor: 'pointer',
             }}>
             <CardContent sx={{height: 100}}>
                 <Typography variant="h6" gutterBottom>

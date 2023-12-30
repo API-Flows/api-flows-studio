@@ -6,13 +6,15 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Chip from '@mui/material/Chip';
-
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 
 const StepDetails = ({ step }) => {
     return (
-        <Grid container spacing={2} sx={{ border: '1px solid #ccc', padding: 2, textAlign: 'center' }}>
+        <>
+        <Divider/>
+        <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <Grid item xs={2}>
                 <Typography variant="body1" color="text.secondary" align="left">
                     stepId:
@@ -96,6 +98,7 @@ const StepDetails = ({ step }) => {
             <ListOnSuccess onSuccessList={step.onSuccess} />
             <ListOnFailure onFailureList={step.onFailure} />
         </Grid>
+        </>
     );
 }
 

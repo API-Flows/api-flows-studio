@@ -12,7 +12,8 @@ const OutputCard = ({ onSelect, isSelected, workflow }) => {
                 minWidth: 150,
                 marginLeft: 5,
                 background: isSelected ? '#f0f0f0' : '',
-                transform: isSelected ? 'scale(1.3)' : 'scale(1)'
+                transform: isSelected ? 'scale(1.3)' : 'scale(1)',
+                cursor: 'pointer',
             }}>
             <CardContent sx={{height: 100}}>
                 <Typography variant="h6" gutterBottom>
