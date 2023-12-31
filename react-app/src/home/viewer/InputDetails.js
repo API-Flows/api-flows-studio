@@ -8,7 +8,10 @@ import Divider from '@mui/material/Divider';
 
 const InputDetails = ({ inputs }) => {
     return (
+        <>
         <ListProperties properties={inputs.properties} />
+        <ShowRef $ref={inputs.$ref} />
+        </>
     );
 }
 
@@ -25,6 +28,24 @@ const ListProperties = ({ properties }) => {
                     <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>
                 </tr>
             ))}
+            </table>
+        </Grid>
+        </>
+        );
+    }
+}
+
+const ShowRef = ({ $ref }) => {
+    if ($ref != null) {
+        return (
+        <>
+        <Divider/>
+         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
+            <table width="100%">
+            <tr>
+                <td align="right" width="20%"><Typography>$ref:</Typography></td>
+                <td align="left"><Typography>&nbsp;&nbsp;{$ref}</Typography></td>
+            </tr>
             </table>
         </Grid>
         </>

@@ -14,6 +14,7 @@ import Banner from "../../layout/Banner.js";
 import WorkflowsTabViewer from "./WorkflowsTabViewer.js"
 import SourceDescriptionsTabViewer from "./SourceDescriptionsTabViewer.js"
 import ComponentsTabViewer from "./ComponentsTabViewer.js"
+import InfoTabViewer from "./InfoTabViewer.js"
 
 function Viewer() {
 
@@ -101,6 +102,7 @@ const VerticalTabs = ({ workflowsSpec, components }) => {
                 <Tab label="Workflows" {...a11yProps(0)} />
                 <Tab label="Source Descriptions" {...a11yProps(1)} />
                 <Tab label="Components" {...a11yProps(2)} />
+                <Tab label="Info" {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0} >
                 <WorkflowsTabViewer workflowsSpec={workflowsSpec} />
@@ -110,6 +112,9 @@ const VerticalTabs = ({ workflowsSpec, components }) => {
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ComponentsTabViewer workflowsSpec={workflowsSpec} components={components}/>
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                <InfoTabViewer workflowsSpec={workflowsSpec} />
             </TabPanel>
         </Box>
     );

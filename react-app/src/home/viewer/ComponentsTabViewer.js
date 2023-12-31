@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
-import InfoPopup from "./InfoPopup.js";
 import InputCard from "./InputCard.js";
 import StepCard from "./StepCard.js";
 import OutputCard from "./OutputCard.js";
@@ -33,7 +32,7 @@ const ComponentsTabViewer = ({ workflowsSpec, components }) => {
                   alignItems="center"
                 >
                     <Typography variant="body1" color="text.secondary" align="center">
-                      {workflowsSpec.info.title} ({workflowsSpec.info.version}) <InfoPopup text={workflowsSpec.info.description}/>
+                      {workflowsSpec.info.title} ({workflowsSpec.info.version})
                     </Typography>
             </Box>
 

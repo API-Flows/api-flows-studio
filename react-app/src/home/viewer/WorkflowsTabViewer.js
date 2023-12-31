@@ -5,13 +5,13 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { StepIcon } from '@mui/material';
 import CircleTwoToneIcon from '@mui/icons-material/CircleTwoTone';
+import CircleSharpIcon from '@mui/icons-material/CircleSharp';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 
-import InfoPopup from "./InfoPopup.js";
 import InputCard from "./InputCard.js";
 import StepCard from "./StepCard.js";
 import OutputCard from "./OutputCard.js";
@@ -44,7 +44,7 @@ const WorkflowsTabViewer = ({ workflowsSpec }) => {
                   alignItems="center"
                 >
                     <Typography variant="body1" color="text.secondary" align="center">
-                        {workflowsSpec.info.title} ({workflowsSpec.info.version}) <InfoPopup text={workflowsSpec.info.description}/>
+                        {workflowsSpec.info.title} ({workflowsSpec.info.version})
                     </Typography>
             </Box>
             <br/>
@@ -75,26 +75,43 @@ const WorkflowsViewer = ({ workflow }) => {
         setSelectedCard(cardId);
     };
 
+    const CustomStepIcon = ( {active} ) => {
+        if(active === "true") {
+            return <CircleSharpIcon sx = {{ cursor: 'pointer' }}/>
+        } else {
+            return (
+                <CircleTwoToneIcon sx = {{ cursor: 'pointer' }}/>
+            );
+      }
+    };
+
+
     return (
         <>
 
 {/* stepper view */}
             <Stepper alternativeLabel activeStep="-1" sx = {{ width: "100%", justifyContent: "center"}}>
-                <Step key="inputs">
-                  <StepLabel StepIconComponent={CustomStepIcon} onClick={() => handleCardClick("input")}>
-                    <ClickableStepContent label="Inputs" />
+                <Step key="inputs" >
+                  <StepLabel
+                    StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === 'input' ? 'true' : 'false'} />)}
+                    onClick={() => handleCardClick("input")}>
+                        <ClickableStepContent label="Inputs" />
                   </StepLabel>
                 </Step>
                 {workflow.steps.map((step, index) => (
                     <Step key={step.stepId}>
-                      <StepLabel StepIconComponent={CustomStepIcon}  onClick={() => handleCardClick(index)}>
-                        <ClickableStepContent label={step.stepId} />
+                      <StepLabel
+                        StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === index ? 'true' : 'false'} />)}
+                        onClick={() => handleCardClick(index)}>
+                            <ClickableStepContent label={step.stepId} />
                       </StepLabel>
                     </Step>
                 ))}
                 <Step key="outputs">
-                  <StepLabel StepIconComponent={CustomStepIcon}  onClick={() => handleCardClick("output")}>
-                    <ClickableStepContent label="outputs" />
+                    <StepLabel
+                        StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === 'output' ? 'true' : 'false'} />)}
+                        onClick={() => handleCardClick("output")}>
+                            <ClickableStepContent label="outputs" />
                   </StepLabel>
                 </Step>
             </Stepper>
@@ -126,13 +143,8 @@ const WorkflowsViewer = ({ workflow }) => {
             </Container>
         </>
     );
-}
 
-const CustomStepIcon = () => {
-  return (
-      <CircleTwoToneIcon sx = {{ cursor: 'pointer' }}/>
-  );
-};
+}
 
 const ClickableStepContent = ({ label }) => (
   <div style={{ cursor: 'pointer' }}>
