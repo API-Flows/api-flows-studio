@@ -19,8 +19,6 @@ import StepDetails from "./StepDetails.js";
 import InputDetails from "./InputDetails.js";
 import OutputDetails from "./OutputDetails.js";
 
-import * as flows from "./Flow.js"
-
 const WorkflowsTabViewer = ({ workflowsSpec }) => {
 
     const [selectedWorkflow, setSelectedWorkflow] = useState(workflowsSpec.workflows[0]);
@@ -29,11 +27,6 @@ const WorkflowsTabViewer = ({ workflowsSpec }) => {
         setSelectedWorkflow(workflow);
     };
 
-    const [selectedCard, setSelectedCard] = useState(null);
-
-    const handleCardClick = (cardId) => {
-        setSelectedCard(cardId);
-    };
 
     return (
         <>
@@ -75,6 +68,18 @@ const WorkflowsViewer = ({ workflow }) => {
         setSelectedCard(cardId);
     };
 
+    const isInput = (type) => {
+        return type === 'input';
+    }
+
+    const isOutput = (type) => {
+        return type === 'output';
+    }
+
+    const isStep = (type) => {
+        return !isInput(type) && !isOutput(type);
+    }
+
     const CustomStepIcon = ( {active} ) => {
         if(active === "true") {
             return <CircleSharpIcon sx = {{ cursor: 'pointer' }}/>
@@ -85,7 +90,6 @@ const WorkflowsViewer = ({ workflow }) => {
       }
     };
 
-
     return (
         <>
 
@@ -93,7 +97,7 @@ const WorkflowsViewer = ({ workflow }) => {
             <Stepper alternativeLabel activeStep="-1" sx = {{ width: "100%", justifyContent: "center"}}>
                 <Step key="inputs" >
                   <StepLabel
-                    StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === 'input' ? 'true' : 'false'} />)}
+                    StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === "input" ? 'true' : 'false'} />)}
                     onClick={() => handleCardClick("input")}>
                         <ClickableStepContent label="Inputs" />
                   </StepLabel>
@@ -109,7 +113,7 @@ const WorkflowsViewer = ({ workflow }) => {
                 ))}
                 <Step key="outputs">
                     <StepLabel
-                        StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === 'output' ? 'true' : 'false'} />)}
+                        StepIconComponent={(props) => (<CustomStepIcon active={selectedCard === "output" ? 'true' : 'false'} />)}
                         onClick={() => handleCardClick("output")}>
                             <ClickableStepContent label="outputs" />
                   </StepLabel>
@@ -137,9 +141,9 @@ const WorkflowsViewer = ({ workflow }) => {
             <br/><br/>
 */}
             <Container maxWidth="xl">
-                {flows.isInput(selectedCard) && (<InputDetails inputs={workflow.inputs}/>) }
-                {flows.isOutput(selectedCard) && (<OutputDetails outputs={workflow.outputs}/>) }
-                {flows.isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} />) }
+                {isInput(selectedCard) && (<InputDetails inputs={workflow.inputs}/>) }
+                {isOutput(selectedCard) && (<OutputDetails outputs={workflow.outputs}/>) }
+                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]}/>) }
             </Container>
         </>
     );
