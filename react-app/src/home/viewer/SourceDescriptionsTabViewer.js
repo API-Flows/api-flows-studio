@@ -4,6 +4,8 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import IconButton from '@mui/material/IconButton';
 
 import InputCard from "./InputCard.js";
 import StepCard from "./StepCard.js";
@@ -20,6 +22,12 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
 
     const handleCardClick = (cardId) => {
         setSelectedCard(cardId);
+    };
+
+    const openSourceDescription = (filename) => {
+        const baseUrl = workflowsSpec.location.substring(0, workflowsSpec.location.lastIndexOf('/') + 1);
+        const filepath = baseUrl + filename;
+        window.open(filepath, '_blank');
     };
 
     return (
@@ -43,8 +51,12 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
                     </Box>
                     <Box justifyContent="left" sx={{ p: 1 }}>
                     <Typography>name: {sourceDescription.name}</Typography>
-                    <Typography>url:{sourceDescription.url}</Typography>
+                    <Box display="flex" alignItems="center">
+                        <Typography>url:{sourceDescription.url}</Typography>
+                        <IconButton onClick={() => openSourceDescription(sourceDescription.url)}><OpenInNewIcon fontSize="small" /></IconButton>
+                    </Box>
                     {sourceDescription.type && <Typography>type: {sourceDescription.type}</Typography>}
+
                     </Box>
                 </Box>
             ))}
