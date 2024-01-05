@@ -10,6 +10,15 @@ import Divider from '@mui/material/Divider';
 const OutputDetails = ({ outputs }) => {
     return (
         <>
+        {outputs && Object.entries(outputs).length > 0 && <ShowOutputDetails outputs={outputs} />}
+        {outputs && Object.entries(outputs).length === 0 && <EmptySection/>}
+        </>
+    );
+}
+
+const ShowOutputDetails = ({ outputs }) => {
+    return (
+        <>
         <Divider/>
         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <table width="100%">
@@ -24,4 +33,18 @@ const OutputDetails = ({ outputs }) => {
         </>
     );
 }
+
+const EmptySection = ({ }) => {
+        return (
+        <>
+            <Divider/>
+            <br/>
+            <Box display="flex" justifyContent="center">
+                <Typography>No Outputs is defined</Typography>
+            </Box>
+        </>
+        );
+}
+
+
 export default OutputDetails;

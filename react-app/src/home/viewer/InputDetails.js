@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -9,8 +10,9 @@ import Divider from '@mui/material/Divider';
 const InputDetails = ({ inputs }) => {
     return (
         <>
-        <ListProperties properties={inputs.properties} />
-        <ShowRef $ref={inputs.$ref} />
+        {inputs && <ListProperties properties={inputs.properties} />}
+        {inputs && <ShowRef $ref={inputs.$ref} />}
+        {!inputs && <EmptySection/>}
         </>
     );
 }
@@ -40,7 +42,7 @@ const ShowRef = ({ $ref }) => {
         return (
         <>
         <Divider/>
-         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
+        <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <table width="100%">
             <tr>
                 <td align="right" width="20%"><Typography>$ref:</Typography></td>
@@ -51,6 +53,18 @@ const ShowRef = ({ $ref }) => {
         </>
         );
     }
+}
+
+const EmptySection = ({ }) => {
+        return (
+        <>
+            <Divider/>
+            <br/>
+            <Box display="flex" justifyContent="center">
+                <Typography>No Inputs is defined</Typography>
+            </Box>
+        </>
+        );
 }
 
 export default InputDetails;
