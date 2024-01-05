@@ -8,8 +8,6 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
 
-import * as flows from "./Flow.js"
-
 const InfoTabViewer = ({ workflowsSpec }) => {
 
     const handleOpenFile = () => {

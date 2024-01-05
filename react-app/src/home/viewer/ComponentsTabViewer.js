@@ -13,8 +13,6 @@ import StepDetails from "./StepDetails.js";
 import InputDetails from "./InputDetails.js";
 import OutputDetails from "./OutputDetails.js";
 
-import * as flows from "./Flow.js"
-
 const ComponentsTabViewer = ({ workflowsSpec, components }) => {
 
     const [selectedCard, setSelectedCard] = useState(null);
