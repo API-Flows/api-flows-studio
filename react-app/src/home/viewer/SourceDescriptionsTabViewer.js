@@ -36,13 +36,15 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                    <Typography variant="body1" color="text.secondary" align="center">
-                      {workflowsSpec.info.title} ({workflowsSpec.info.version})
-                    </Typography>
+                    {workflowsSpec.info && (
+                        <Typography variant="body1" color="text.secondary" align="center">
+                          {workflowsSpec.info.title} ({workflowsSpec.info.version})
+                        </Typography>
+                    )}
             </Box>
             <br/>
 
-            {workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
+            {workflowsSpec.sourceDescriptions && workflowsSpec.sourceDescriptions.map((sourceDescription, index) => (
                 <Box display="flex">
                     <Box justifyContent="right" sx={{ p: 1 }}>
                     -

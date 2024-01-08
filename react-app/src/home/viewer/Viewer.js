@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import IconButton from '@mui/material/IconButton';
 
 import Footer from "../../layout/Footer.js";
 import Banner from "../../layout/Banner.js";
@@ -18,14 +20,12 @@ import InfoTabViewer from "./InfoTabViewer.js"
 
 function Viewer() {
 
-    const [workflowsSpec, setWorkflowsSpec] = useState(null);
-    const [components, setComponents] = useState(null);
+    const [workflowsSpecificationView, setWorkflowsSpecificationView] = useState(null);
 
     useEffect(() => {
         axios.post('/api/workflow/view')
           .then((response) => {
-            setWorkflowsSpec(response.data.openAPIWorkflow);
-            setComponents(response.data.componentsAsString)
+            setWorkflowsSpecificationView(response.data);
           })
           .catch((error) => {
             console.error('API request error:', error);
@@ -38,7 +38,7 @@ function Viewer() {
             <br/><br/>
             <Divider />
             <Container component="main" maxWidth="false">
-                <VerticalTabs workflowsSpec={workflowsSpec} components={components}/>
+                <VerticalTabs workflowsSpecificationView={workflowsSpecificationView} />
             </Container>
             <Footer/>
         </>
@@ -79,16 +79,18 @@ function a11yProps(index) {
     };
 }
 
-const VerticalTabs = ({ workflowsSpec, components }) => {
+const VerticalTabs = ({ workflowsSpecificationView }) => {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    if(workflowsSpec === null) {
+    if(workflowsSpecificationView === null) {
         return <div></div>;
     } else {
+    console.log(workflowsSpecificationView.openAPIWorkflowParserResult)
+
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', width: '100%' }} >
             <Tabs
@@ -102,19 +104,28 @@ const VerticalTabs = ({ workflowsSpec, components }) => {
                 <Tab label="Workflows" {...a11yProps(0)} />
                 <Tab label="Source Descriptions" {...a11yProps(1)} />
                 <Tab label="Components" {...a11yProps(2)} />
-                <Tab label="Info" {...a11yProps(2)} />
+                <Tab label={
+                    <Box display="flex" alignItems="center">
+                        <div>Info</div>
+                        {!workflowsSpecificationView.openAPIWorkflowParserResult.valid && (
+                            <IconButton size="small">
+                                <ReportProblemIcon sx={{ color: "orange" }} />
+                            </IconButton>
+                        )}
+                    </Box>
+                 } {...a11yProps(2)} />
             </Tabs>
             <TabPanel value={value} index={0} >
-                <WorkflowsTabViewer workflowsSpec={workflowsSpec} />
+                <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <SourceDescriptionsTabViewer workflowsSpec={workflowsSpec} />
+                <SourceDescriptionsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ComponentsTabViewer workflowsSpec={workflowsSpec} components={components}/>
+                <ComponentsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} components={workflowsSpecificationView.componentsAsString}/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <InfoTabViewer workflowsSpec={workflowsSpec} />
+                <InfoTabViewer workflowsSpecificationView={workflowsSpecificationView} />
             </TabPanel>
         </Box>
     );

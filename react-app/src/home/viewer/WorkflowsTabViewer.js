@@ -27,7 +27,6 @@ const WorkflowsTabViewer = ({ workflowsSpec }) => {
         setSelectedWorkflow(workflow);
     };
 
-
     return (
         <>
             <Box
@@ -36,9 +35,11 @@ const WorkflowsTabViewer = ({ workflowsSpec }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                    <Typography variant="body1" color="text.secondary" align="center">
-                        {workflowsSpec.info.title} ({workflowsSpec.info.version})
-                    </Typography>
+                    {workflowsSpec.info && (
+                        <Typography variant="body1" color="text.secondary" align="center">
+                          {workflowsSpec.info.title} ({workflowsSpec.info.version})
+                        </Typography>
+                    )}
             </Box>
             <br/>
                 <Box display="flex" justifyContent="center" width="100%">

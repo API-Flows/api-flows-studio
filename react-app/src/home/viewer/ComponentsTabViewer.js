@@ -29,9 +29,11 @@ const ComponentsTabViewer = ({ workflowsSpec, components }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                    <Typography variant="body1" color="text.secondary" align="center">
-                      {workflowsSpec.info.title} ({workflowsSpec.info.version})
-                    </Typography>
+                    {workflowsSpec.info && (
+                        <Typography variant="body1" color="text.secondary" align="center">
+                          {workflowsSpec.info.title} ({workflowsSpec.info.version})
+                        </Typography>
+                    )}
             </Box>
 
             <Box

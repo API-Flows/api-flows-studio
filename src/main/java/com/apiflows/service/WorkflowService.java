@@ -26,15 +26,15 @@ public class WorkflowService {
 
     public WorkflowsSpecificationView get(String url) {
 
-        OpenAPIWorkflow openAPIWorkflow = parse(url);
+        OpenAPIWorkflowParserResult result = parse(url);
 
-        WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(openAPIWorkflow);
-        workflowsSpecificationView.setComponentsAsString(getComponents(openAPIWorkflow));
+        WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
+        workflowsSpecificationView.setComponentsAsString(getComponents(result.getOpenAPIWorkflow()));
 
         return workflowsSpecificationView;
     }
 
-    private OpenAPIWorkflow parse(String url) {
+    private OpenAPIWorkflowParserResult parse(String url) {
 
         OpenAPIWorkflowParserResult result = parser.parse(url);
 
@@ -42,7 +42,7 @@ public class WorkflowService {
             log.warn("Error while parsing {}", url );
         }
 
-        return result.getOpenAPIWorkflow();
+        return result;
 
     }
 

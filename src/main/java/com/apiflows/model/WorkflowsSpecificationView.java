@@ -1,23 +1,25 @@
 package com.apiflows.model;
 
+import com.apiflows.parser.OpenAPIWorkflowParserResult;
+
 public class WorkflowsSpecificationView {
 
-    private OpenAPIWorkflow openAPIWorkflow = null;
+    private OpenAPIWorkflowParserResult openAPIWorkflowParserResult = null;
     private String componentsAsString = null;
 
     public WorkflowsSpecificationView() {
     }
 
-    public WorkflowsSpecificationView(OpenAPIWorkflow openAPIWorkflow) {
-        this.openAPIWorkflow = openAPIWorkflow;
+    public WorkflowsSpecificationView(OpenAPIWorkflowParserResult openAPIWorkflowParserResult) {
+        this.openAPIWorkflowParserResult = openAPIWorkflowParserResult;
     }
 
-    public OpenAPIWorkflow getOpenAPIWorkflow() {
-        return openAPIWorkflow;
+    public OpenAPIWorkflowParserResult getOpenAPIWorkflowParserResult() {
+        return openAPIWorkflowParserResult;
     }
 
-    public void setOpenAPIWorkflow(OpenAPIWorkflow openAPIWorkflow) {
-        this.openAPIWorkflow = openAPIWorkflow;
+    public void setOpenAPIWorkflowParserResult(OpenAPIWorkflowParserResult openAPIWorkflowParserResult) {
+        this.openAPIWorkflowParserResult = openAPIWorkflowParserResult;
     }
 
     public String getComponentsAsString() {
