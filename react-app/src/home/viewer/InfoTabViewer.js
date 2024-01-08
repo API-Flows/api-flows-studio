@@ -12,6 +12,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import Divider from '@mui/material/Divider';
 
@@ -80,12 +81,10 @@ const InfoTabViewer = ({ workflowsSpecificationView }) => {
                 </Typography>
             </Grid>
             <Grid item xs={10}>
-                <Typography variant="body1" align="left">
-                    <Box display="flex" >
-                        <Typography>{workflowsSpec.location}&nbsp;</Typography>
-                        <IconButton onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>
-                    </Box>
-                </Typography>
+                <Box display="flex" >
+                    <Typography variant="body1">{workflowsSpec.location}&nbsp;</Typography>
+                    <IconButton sx={{ p: 0 }} onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>
+                </Box>
             </Grid>
 
             <ListErrors errors={openAPIWorkflowParserResult.errors} valid={openAPIWorkflowParserResult.valid}/>
@@ -106,9 +105,15 @@ const ListErrors = ({ errors, valid }) => {
                 id="panel-outputs-header"
             >
                 <Box display="flex" >
-                    <Typography>Errors ({errors.length})</Typography>{!valid && (
-                        <IconButton size="small">
+                    <Typography>Errors ({errors.length})&nbsp;</Typography>
+                    {!valid && (
+                        <IconButton sx={{ p: 0 }} size="small">
                             <ReportProblemIcon sx={{ color: "orange" }} />
+                        </IconButton>
+                    )}
+                    {valid && (
+                        <IconButton sx={{ p: 0 }} size="small">
+                            <CheckCircleIcon sx={{ color: "green" }} />
                         </IconButton>
                     )}
                 </Box>
