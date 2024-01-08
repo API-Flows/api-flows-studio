@@ -42,45 +42,45 @@ const InfoTabViewer = ({ workflowsSpecificationView }) => {
             <br/>
         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="right">
+                <Typography variant="body1" align="right">
                     Title:
                 </Typography>
             </Grid>
             <Grid item xs={10}>{workflowsSpec.info && (
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     {workflowsSpec.info.title}
                 </Typography>
                 )}
             </Grid>
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="right">
+                <Typography variant="body1" align="right">
                     Version:
                 </Typography>
             </Grid>
             <Grid item xs={10}>{workflowsSpec.info && (
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     {workflowsSpec.info.version}
                 </Typography>
                 )}
             </Grid>
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="right">
+                <Typography variant="body1" align="right">
                     Description:
                 </Typography>
             </Grid>
             <Grid item xs={10}>{workflowsSpec.info && (
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     {workflowsSpec.info.description}
                 </Typography>
                 )}
             </Grid>
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="right">
+                <Typography variant="body1" align="right">
                     Location:
                 </Typography>
             </Grid>
             <Grid item xs={10}>
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     <Box display="flex" >
                         <Typography>{workflowsSpec.location}&nbsp;</Typography>
                         <IconButton onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>

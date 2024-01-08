@@ -16,24 +16,24 @@ const StepDetails = ({ step }) => {
         <Divider/>
         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     stepId:
                 </Typography>
             </Grid>
             <Grid item xs={10}>
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     {step.stepId}
                 </Typography>
             </Grid>
             {step.operationId !== null && (
                 <>
                 <Grid item xs={2}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         operationId:
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         {step.operationId}
                     </Typography>
                 </Grid>
@@ -42,12 +42,12 @@ const StepDetails = ({ step }) => {
             {step.operationRef !== null && (
                 <>
                 <Grid item xs={2}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         operationRef:
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         {step.operationRef}
                     </Typography>
                 </Grid>
@@ -56,36 +56,36 @@ const StepDetails = ({ step }) => {
             {step.workflowId !== null && (
                 <>
                 <Grid item xs={2}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         workflowId:
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         {step.workflowId}
                     </Typography>
                 </Grid>
                 </>
             )}
             <Grid item xs={2}>
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     description:
                 </Typography>
             </Grid>
             <Grid item xs={10}>
-                <Typography variant="body1" color="text.secondary" align="left">
+                <Typography variant="body1" align="left">
                     {step.description}
                 </Typography>
             </Grid>
             {step.dependsOn !== null && (
                 <>
                 <Grid item xs={2}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         dependsOn:
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="body1" color="text.secondary" align="left">
+                    <Typography variant="body1" align="left">
                         {step.dependsOn}
                     </Typography>
                 </Grid>
