@@ -14,7 +14,7 @@ const StepDetails = ({ step }) => {
     return (
         <>
         <Divider/>
-        <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
+        <Grid container spacing={2} sx={{ padding: 2 }}>
             <Grid item xs={2}>
                 <Typography variant="body1" align="left">
                     stepId:
@@ -280,27 +280,18 @@ const ListSuccessCriteria = ({ successCriteriaList }) => {
                 <Typography>SuccessCriteria ({successCriteriaList.length})</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <Box display="flex" width="100%" >
                 {successCriteriaList.map((successCriteria, index) => (
-                    <>
-                        {successCriteria.context &&
-                        <Typography variant="body1" color="text.secondary" align="left">
-                            context: {successCriteria.context}&nbsp;&nbsp;
-                        </Typography>
-                        }
-                        {successCriteria.condition &&
-                        <Typography variant="body1" color="text.secondary" align="left">
-                            context: {successCriteria.condition}&nbsp;&nbsp;
-                        </Typography>
-                        }
-                        {successCriteria.type &&
-                        <Typography variant="body1" color="text.secondary" align="left">
-                            context: {successCriteria.type}&nbsp;&nbsp;
-                        </Typography>
-                        }
-                    </>
+                    <Box display="flex" width="100%">
+                        <Box justifyContent="right" sx={{ p: 1 }}>
+                        -
+                        </Box>
+                        <Box justifyContent="left" sx={{ p: 1 }} >
+                            {successCriteria.context && <Typography>context: {successCriteria.context}</Typography>}
+                            {successCriteria.condition && <Typography>condition: {successCriteria.condition}</Typography>}
+                            {successCriteria.type && <Typography>type: {successCriteria.type}</Typography>}
+                        </Box>
+                    </Box>
                 ))}
-                </Box>
             </AccordionDetails>
         </Accordion>
         );
