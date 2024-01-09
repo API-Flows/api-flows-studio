@@ -10,9 +10,9 @@ const Footer = () => {
             <td>
             <Typography variant="body2" color="textSecondary" align="left">
                 &nbsp;&nbsp;
-                <Link href="https://github.com/API-Flows" color="textSecondary" underline="hover" >GitHub</Link>
+                <Link href="/" color="textSecondary" underline="hover" >Home</Link>
                 &nbsp;•&nbsp;
-                <Link href="/" color="textSecondary" underline="hover" >Cookies</Link>
+                <Link href="https://github.com/API-Flows" target="_blank" color="textSecondary" underline="hover" >GitHub</Link>
             </Typography>
             </td>
         </tr>
