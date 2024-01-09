@@ -108,7 +108,16 @@ const ListParameters = ({ parameters }) => {
 
     const handleCardClick = (param) => {
         setSelectedParameter(param);
+    };
 
+    const getName = (parameter) => {
+        if (parameter.name !== null) {
+            return parameter.name;
+        }
+        if (parameter.$ref !== null) {
+            return parameter.$ref.substring(parameter.$ref.lastIndexOf('/') + 1);
+        }
+        return "n/a";
     };
 
     if (parameters != null) {
@@ -123,10 +132,11 @@ const ListParameters = ({ parameters }) => {
             </AccordionSummary>
             <AccordionDetails>
                 <Grid container spacing={1}>
-                    {parameters.map((chip, index) => (
+                    {parameters.map((parameter, index) => (
                     <Grid item key={index}>
-                        <Chip label={chip.name} onClick={() => handleCardClick(chip)}
-                         variant={selectedParameter && selectedParameter.name === chip.name ? 'outlined' : 'filled'} />
+                        <Chip label={getName(parameter)} onClick={() => handleCardClick(parameter)}
+                         variant={selectedParameter && selectedParameter.name === parameter.name ? 'outlined' : 'filled'}
+                         color={selectedParameter && selectedParameter.name === parameter.name ? 'success' : 'default'} />
                     </Grid>
                     ))}
                 </Grid>
@@ -156,6 +166,20 @@ const ListParameters = ({ parameters }) => {
                         <Grid item xs={10}>
                             <Typography variant="body1" color="text.secondary" align="left">
                                 {selectedParameter.in}
+                            </Typography>
+                        </Grid>
+                        </>
+                    )}
+                    {selectedParameter.$ref !== null && (
+                        <>
+                        <Grid item xs={2}>
+                            <Typography variant="body1" color="text.secondary" align="left">
+                                $ref:
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Typography variant="body1" color="text.secondary" align="left">
+                                {selectedParameter.$ref}
                             </Typography>
                         </Grid>
                         </>
