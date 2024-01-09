@@ -86,9 +86,12 @@ const InfoTabViewer = ({ workflowsSpecificationView }) => {
                     <IconButton sx={{ p: 0 }} onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>
                 </Box>
             </Grid>
-
-            <ListErrors errors={openAPIWorkflowParserResult.errors} valid={openAPIWorkflowParserResult.valid}/>
-
+            <Grid item xs={1}>
+                &nbsp;
+            </Grid>
+            <Grid item xs={11}>
+                <ListErrors errors={openAPIWorkflowParserResult.errors} valid={openAPIWorkflowParserResult.valid}/>
+            </Grid>
         </Grid>
         </>
     );
