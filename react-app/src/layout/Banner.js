@@ -12,7 +12,7 @@ const Banner = () => {
                 padding: '5px',
                 marginTop: 'auto'
             }}>
-            <Typography variant="h6" gutterBottom align="center">
+            <Typography variant="h5" gutterBottom align="center">
                 API Flows
             </Typography>
         </Typography>
