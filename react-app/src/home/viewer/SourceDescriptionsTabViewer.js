@@ -50,13 +50,12 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
                     -
                     </Box>
                     <Box justifyContent="left" sx={{ p: 1 }}>
-                    <Typography>name: {sourceDescription.name}</Typography>
-                    <Box display="flex" alignItems="center">
-                        <Typography>url:{sourceDescription.url}</Typography>
-                        <IconButton onClick={() => openSourceDescription(sourceDescription.url)}><OpenInNewIcon fontSize="small" /></IconButton>
-                    </Box>
-                    {sourceDescription.type && <Typography>type: {sourceDescription.type}</Typography>}
-
+                        <Typography>name: {sourceDescription.name}</Typography>
+                        <Box display="flex" alignItems="center">
+                            <Typography>url:{sourceDescription.url}</Typography>
+                            <IconButton onClick={() => openSourceDescription(sourceDescription.url)}><OpenInNewIcon fontSize="small" /></IconButton>
+                        </Box>
+                        {sourceDescription.type && <Typography>type: {sourceDescription.type}</Typography>}
                     </Box>
                 </Box>
             ))}
