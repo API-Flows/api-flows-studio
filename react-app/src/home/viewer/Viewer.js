@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -21,9 +22,12 @@ import InfoTabViewer from "./InfoTabViewer.js"
 function Viewer() {
 
     const [workflowsSpecificationView, setWorkflowsSpecificationView] = useState(null);
+    const location = useLocation();
+
+    const encodedUrl = encodeURIComponent(location.state?.url || '');
 
     useEffect(() => {
-        axios.post('/api/workflow/view')
+        axios.post('/api/workflow/view', location.state?.url)
           .then((response) => {
             setWorkflowsSpecificationView(response.data);
           })
@@ -48,21 +52,20 @@ function Viewer() {
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
-return (
-    <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`vertical-tabpanel-${index}`}
-        aria-labelledby={`vertical-tab-${index}`}
-        style={ {width: '100%'} }
-        {...other}
-    >
-        {value === index && (
-        <Box sx={{ p: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-        )}
-    </div>
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            style={ {width: '100%'} }
+            {...other}>
+                {value === index && (
+                <Box sx={{ p: 2 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
     );
 }
 

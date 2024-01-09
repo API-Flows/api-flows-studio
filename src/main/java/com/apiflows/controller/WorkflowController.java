@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,11 +34,14 @@ public class WorkflowController {
     private WorkflowService workflowService;
 
     @PostMapping("/view")
-    ResponseEntity<WorkflowsSpecificationView> view()  {
+    ResponseEntity<WorkflowsSpecificationView> view(@RequestBody String url) throws UnsupportedEncodingException {
+
+        url = URLDecoder.decode(url, "UTF-8");
+        log.info("Processing " + url);
 
 //        String url = "https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml";
 //        String url = "./src/test/resources/simple.workflow.yaml";
-        String url = "./src/test/resources/pet-coupons.workflow.yaml";
+        //String url = "./src/test/resources/pet-coupons.workflow.yaml";
 
         WorkflowsSpecificationView view = workflowService.get(url);
 

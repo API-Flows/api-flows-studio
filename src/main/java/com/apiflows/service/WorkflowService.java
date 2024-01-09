@@ -31,6 +31,12 @@ public class WorkflowService {
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result.getOpenAPIWorkflow()));
 
+        if(result.getOpenAPIWorkflow() != null &&
+            result.getOpenAPIWorkflow().getInfo() != null) {
+            Info info = result.getOpenAPIWorkflow().getInfo();
+            log.info("Loaded '{} ({})'", info.getTitle(), info.getVersion());
+        }
+
         return workflowsSpecificationView;
     }
 
