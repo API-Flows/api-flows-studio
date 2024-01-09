@@ -286,9 +286,9 @@ const ListSuccessCriteria = ({ successCriteriaList }) => {
                         -
                         </Box>
                         <Box justifyContent="left" sx={{ p: 1 }} >
-                            {successCriteria.context && <Typography>context: {successCriteria.context}</Typography>}
-                            {successCriteria.condition && <Typography>condition: {successCriteria.condition}</Typography>}
-                            {successCriteria.type && <Typography>type: {successCriteria.type}</Typography>}
+                            {successCriteria.context && <Typography color="text.secondary" >context: {successCriteria.context}</Typography>}
+                            {successCriteria.condition && <Typography color="text.secondary" >condition: {successCriteria.condition}</Typography>}
+                            {successCriteria.type && <Typography color="text.secondary" >type: {successCriteria.type}</Typography>}
                         </Box>
                     </Box>
                 ))}
