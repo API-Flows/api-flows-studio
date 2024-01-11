@@ -18,21 +18,31 @@ import WorkflowsTabViewer from "./WorkflowsTabViewer.js"
 import SourceDescriptionsTabViewer from "./SourceDescriptionsTabViewer.js"
 import ComponentsTabViewer from "./ComponentsTabViewer.js"
 import InfoTabViewer from "./InfoTabViewer.js"
+import ErrorMessage from "../../util/ErrorMessage.js";
 
 function Viewer() {
 
     const [workflowsSpecificationView, setWorkflowsSpecificationView] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+
     const location = useLocation();
 
     const encodedUrl = encodeURIComponent(location.state?.url || '');
 
     useEffect(() => {
+        setErrorMsg(null);
         axios.post('/api/workflow/view', location.state?.url)
           .then((response) => {
             setWorkflowsSpecificationView(response.data);
           })
           .catch((error) => {
-            console.error('API request error:', error);
+            if (error.response) {
+                console.error(error.response.data)
+                setErrorMsg(error.response.data.message);
+            } else {
+                console.error("An unexpected error has occurred")
+                setErrorMsg("An unexpected error has occurred");
+            }
           });
     }, []);
 
@@ -41,6 +51,7 @@ function Viewer() {
             <Banner/>
             <br/><br/>
             <Divider />
+            {errorMsg && <ErrorMessage msg={errorMsg} />}
             <Container component="main" maxWidth="false">
                 <VerticalTabs workflowsSpecificationView={workflowsSpecificationView} />
             </Container>

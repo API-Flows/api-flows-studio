@@ -1,5 +1,7 @@
 package com.apiflows.service;
 
+import com.apiflows.exception.InvalidContentException;
+import com.apiflows.exception.UrlNotFoundException;
 import com.apiflows.model.*;
 import com.apiflows.parser.OpenAPIWorkflowParser;
 import com.apiflows.parser.OpenAPIWorkflowParserResult;
@@ -10,9 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
-import io.swagger.v3.core.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,9 +24,27 @@ public class WorkflowService {
 
     private final Logger log = LoggerFactory.getLogger(WorkflowService.class);
 
+    @Autowired
+    private FileService fileService;
+
     private OpenAPIWorkflowParser parser = new OpenAPIWorkflowParser();
 
     public WorkflowsSpecificationView get(String url) {
+
+        String content = null;
+
+        try {
+            content = getFileService().call(url);
+        } catch (Exception e) {
+            log.error("File not found: " + url);
+            throw new UrlNotFoundException("File not found: " + url);
+        }
+
+
+        if(!getFileService().isValidJson(content) || !getFileService().isValidYaml(content)) {
+            log.error("File must be valid JSON or YAML file: " + url);
+            throw new InvalidContentException("File must be a valid JSON or YAML file");
+        }
 
         OpenAPIWorkflowParserResult result = parse(url);
 
@@ -56,17 +76,19 @@ public class WorkflowService {
 
         String components = null;
 
-        try {
-            ObjectMapper objectMapper = getObjectMapper(openAPIWorkflow.isJson());
+        if(openAPIWorkflow != null) {
+            try {
+                ObjectMapper objectMapper = getObjectMapper(openAPIWorkflow.isJson());
 
-            JsonNode rootNode = objectMapper.readTree(openAPIWorkflow.getContent());
+                JsonNode rootNode = objectMapper.readTree(openAPIWorkflow.getContent());
 
-            JsonNode componentsNode = rootNode.path("components");
-            if(componentsNode != null) {
-                components = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(componentsNode);
+                JsonNode componentsNode = rootNode.path("components");
+                if (componentsNode != null) {
+                    components = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(componentsNode);
+                }
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
             }
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
         }
 
         return components;
@@ -91,5 +113,13 @@ public class WorkflowService {
 
 
         return objectMapper;
+    }
+
+    public FileService getFileService() {
+        return fileService;
+    }
+
+    public void setFileService(FileService fileService) {
+        this.fileService = fileService;
     }
 }
