@@ -10,6 +10,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import IconButton from '@mui/material/IconButton';
 
 import { useNavigate } from 'react-router-dom';
+import validator from 'validator';
 
 import Footer from "../layout/Footer.js";
 import Banner from "../layout/Banner.js";
@@ -17,14 +18,23 @@ import Banner from "../layout/Banner.js";
 function Home() {
 
     const [url, setUrl] = useState('');
+    const [isValid, setValid] = useState(true);
 
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Encode the URL before setting it in the state
-        const encodedUrl = encodeURIComponent(url);
-        navigate("/viewer", { state: { url: encodedUrl } });
+
+        // Validate the URL
+        const isValidUrl = validator.isURL(url);
+
+        if (isValidUrl) {
+            // Encode the URL before setting it in the state
+            const encodedUrl = encodeURIComponent(url);
+            navigate("/viewer", { state: { url: encodedUrl } });
+        } else {
+            setValid(false);
+        }
     };
 
     const handleClearText = (e) => {
@@ -55,7 +65,12 @@ function Home() {
                             <TextField
                                 name="url"
                                 value={url}
-                                onChange={(e) => setUrl(e.target.value)}
+                                onChange={(e) => {
+                                setUrl(e.target.value);
+                                setValid(true);
+                                }}
+                                        error={!isValid}
+                                        helperText={!isValid ? 'Please enter a valid URL' : ''}
                                 fullWidth
                                 required
                                 variant="standard"
