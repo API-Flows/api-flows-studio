@@ -3,7 +3,7 @@ target
 *.iml
 .DS_Store
 
-.env
+
 node_modules/
 test-results/
 playwright-report/
