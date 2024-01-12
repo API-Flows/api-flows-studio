@@ -1,0 +1,31 @@
+tasks:
+  - name: backend
+    before: |
+      sdk install java 17.0.4.1-tem < /dev/null
+    command: |
+      ./mvnw spring-boot:run
+      echo Backend running
+
+  - name: frontend
+    before: |
+      cd ./react-app
+    init: |
+      npm install
+    command: |
+      npm start
+      echo Frontend running
+
+ports:
+  - name: API Flows Studio frontend
+    port: 3000
+    visibility: public
+    onOpen: open-preview
+
+  - name: API Flows Studio backend
+    port: 8080
+    visibility: private
+
+vscode:
+  extensions:
+    - pivotal.vscode-spring-boot
+    - vscjava.vscode-java-pack
