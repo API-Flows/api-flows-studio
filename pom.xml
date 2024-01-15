@@ -9,11 +9,11 @@
   </parent>
 
   <groupId>com.apiflows</groupId>
-  <artifactId>api-flow-web</artifactId>
+  <artifactId>api-flows-studio</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>api-flow-web</name>
+  <name>api-flows-studio</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
