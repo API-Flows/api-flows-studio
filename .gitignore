@@ -3,6 +3,8 @@ target
 *.iml
 .DS_Store
 
+dist
+fly.toml
 
 node_modules/
 test-results/
