@@ -1,6 +1,7 @@
 package com.apiflows.service;
 
 import com.apiflows.exception.InvalidContentException;
+import com.apiflows.exception.UnexpectedErrorException;
 import com.apiflows.exception.UrlNotFoundException;
 import com.apiflows.model.*;
 import com.apiflows.parser.OpenAPIWorkflowParser;
@@ -27,35 +28,39 @@ public class WorkflowService {
     @Autowired
     private FileService fileService;
 
-    private OpenAPIWorkflowParser parser = new OpenAPIWorkflowParser();
+    private final OpenAPIWorkflowParser parser = new OpenAPIWorkflowParser();
 
     public WorkflowsSpecificationView get(String url) {
 
-        String content = null;
+        String content = getFileService().call(url);
 
-        try {
-            content = getFileService().call(url);
-        } catch (Exception e) {
-            log.error("File not found: " + url);
-            throw new UrlNotFoundException("File not found: " + url);
-        }
-
-
-        if(!getFileService().isValidJson(content) && !getFileService().isValidYaml(content)) {
+        if (!getFileService().isValidJson(content) && !getFileService().isValidYaml(content)) {
             log.error("File must be valid JSON or YAML file: " + url);
             throw new InvalidContentException("File must be a valid JSON or YAML file");
         }
 
-        OpenAPIWorkflowParserResult result = parse(url);
+        OpenAPIWorkflowParserResult result = null;
+
+        try {
+            result = parse(url);
+        } catch (Exception e) {
+            log.error("Unexpected error", e);
+            throw new UnexpectedErrorException();
+        }
+
+        if (result == null || result.getOpenAPIWorkflow() == null) {
+            log.error("Unexpected error: openAPIWorkflow is null");
+            throw new UnexpectedErrorException();
+        }
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result.getOpenAPIWorkflow()));
 
-        if(result.getOpenAPIWorkflow() != null &&
-            result.getOpenAPIWorkflow().getInfo() != null) {
+        if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
             log.info("Loaded '{} ({})'", info.getTitle(), info.getVersion());
         }
+
 
         return workflowsSpecificationView;
     }
@@ -64,8 +69,8 @@ public class WorkflowService {
 
         OpenAPIWorkflowParserResult result = parser.parse(url);
 
-        if(!result.isValid()) {
-            log.warn("Error while parsing {}", url );
+        if (!result.isValid()) {
+            log.warn("Error while parsing {}", url);
         }
 
         return result;
@@ -76,7 +81,7 @@ public class WorkflowService {
 
         String components = null;
 
-        if(openAPIWorkflow != null) {
+        if (openAPIWorkflow != null) {
             try {
                 ObjectMapper objectMapper = getObjectMapper(openAPIWorkflow.isJson());
 
@@ -98,7 +103,7 @@ public class WorkflowService {
     private ObjectMapper getObjectMapper(boolean json) {
         ObjectMapper objectMapper = null;
         if (json) {
-            objectMapper =  new ObjectMapper();
+            objectMapper = new ObjectMapper();
         } else {
             YAMLFactory yamlFactory = new YAMLFactory();
             yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);

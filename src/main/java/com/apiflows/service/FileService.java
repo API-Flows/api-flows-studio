@@ -1,7 +1,8 @@
 package com.apiflows.service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.apiflows.exception.CannotFetchFileException;
+import com.apiflows.exception.UnexpectedErrorException;
+import com.apiflows.exception.UrlNotFoundException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -9,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -40,6 +40,7 @@ public class FileService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.readTree(content);
+
             return true;
         } catch (Exception e) {
             return false;
@@ -59,7 +60,8 @@ public class FileService {
 
     String call(String url) {
 
-        String res = null;
+        String res;
+
         try {
             URI uri = URI.create(url);
 
@@ -72,12 +74,18 @@ public class FileService {
 
             if (response.statusCode() == 200) {
                 res = response.body();
-            } else {
-                log.warn("Error fetching {} statusCode:{}", url, response.statusCode());
             }
+            else if (response.statusCode() == 404) {
+                log.error("File not found: {} statusCode:{}", url, response.statusCode());
+                throw new UrlNotFoundException("File not found: " + url);
+            } else {
+                log.error("Error fetching {} statusCode:{}", url, response.statusCode());
+                throw new CannotFetchFileException();
+            }
+
         } catch (IOException | InterruptedException e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new UnexpectedErrorException();
         }
 
         return res;
