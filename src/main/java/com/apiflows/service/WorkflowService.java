@@ -41,7 +41,7 @@ public class WorkflowService {
         }
 
 
-        if(!getFileService().isValidJson(content) || !getFileService().isValidYaml(content)) {
+        if(!getFileService().isValidJson(content) && !getFileService().isValidYaml(content)) {
             log.error("File must be valid JSON or YAML file: " + url);
             throw new InvalidContentException("File must be a valid JSON or YAML file");
         }
