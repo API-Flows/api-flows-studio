@@ -2,6 +2,7 @@ package com.apiflows.service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.slf4j.Logger;
@@ -48,8 +49,9 @@ public class FileService {
     boolean isValidYaml(String content) {
         try {
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
-            objectMapper.readTree(content);
-            return true;
+            JsonNode root = objectMapper.readTree(content);
+
+            return root.get("workflowsSpec") != null ? true : false;
         } catch (Exception e) {
             return false;
         }
