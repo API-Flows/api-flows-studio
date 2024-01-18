@@ -6,7 +6,7 @@ OpenAPI workflow viewer.
 
 The API Flows Studio is a web application that loads and displays an OpenAPI workflow file, based on the [OpenAPI SIG-Workflows specification](https://github.com/OAI/sig-workflows).
 
-![Home][./home.gif]
+![Homepage](home.gif)
 
 ## Access the web site
 
