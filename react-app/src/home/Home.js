@@ -41,6 +41,10 @@ function Home() {
         setUrl("");
      };
 
+    const handlePrefill = (value) => {
+        setUrl(value);
+    };
+
     return (
 
         <div>
@@ -69,8 +73,8 @@ function Home() {
                                 setUrl(e.target.value);
                                 setValid(true);
                                 }}
-                                        error={!isValid}
-                                        helperText={!isValid ? 'Please enter a valid URL' : ''}
+                                error={!isValid}
+                                helperText={!isValid ? 'Please enter a valid URL' : ''}
                                 fullWidth
                                 required
                                 variant="standard"
@@ -91,8 +95,21 @@ function Home() {
                             </Button>
                         </Box>
                     </form>
+
                 </Box>
 
+                <br/><br/><br/>
+
+                    <Typography variant="body1" style={{ cursor: 'pointer' }}
+                        onClick={() => handlePrefill('https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml')}
+                    >
+                        <Button variant="outlined" size="small" color="success">
+                            <Typography variant="button" style={{fontFamily: 'YourCustomFont, sans-serif', textTransform: 'none'}}>
+                            Try out the OpenAPI example 'Petstore - Apply Coupons'
+                            </Typography>
+                        </Button>
+                    </Typography>
+                    
             </Container>
 
             <Footer/>
