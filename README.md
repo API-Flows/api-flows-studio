@@ -16,7 +16,7 @@ Try it out on [api-flows.com](https://api-flows.com/)
 
 ## Run on Gitpod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/api-flows/api-flows-studio/tree/main)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/API-Flows/api-flows-studio/tree/main)
 
 
 ## Run on local
@@ -24,7 +24,7 @@ Try it out on [api-flows.com](https://api-flows.com/)
 Clone from the GitHub repository
 
 ```bash
-  git clone https://github.com/api-flows/api-flows-studio.git
+  git clone https://github.com/API-Flows/api-flows-studio.git
   cd api-flows-studio
   mvn spring-boot:run
 ```
