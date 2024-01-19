@@ -15,7 +15,7 @@ if (countlyAppKey) {
     Countly.init({
         app_key: countlyAppKey,
         url: countlyUrl,
-        debug: true
+        debug: false
     });
 
     Countly.q.push(['track_sessions']);
@@ -23,12 +23,10 @@ if (countlyAppKey) {
     Countly.q.push(['track_clicks']);
     Countly.q.push(['track_links']);
     Countly.q.push(["track_errors"]);
-} else {
-    console.log("skip Countly init")
 }
+
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
-
 
 root.render(
   <ThemeProvider theme={theme}>
