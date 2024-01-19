@@ -27,18 +27,22 @@ function Viewer() {
 
     const location = useLocation();
 
-    const encodedUrl = encodeURIComponent(location.state?.url || '');
+    const url = location.state?.url;
 
     useEffect(() => {
         setErrorMsg(null);
-        axios.post('/api/workflow/view', location.state?.url)
+        axios.post('/api/workflow/view', url)
           .then((response) => {
             setWorkflowsSpecificationView(response.data);
           })
           .catch((error) => {
             if (error.response) {
                 console.error(error.response.data)
-                setErrorMsg(error.response.data.message);
+                if(error.response.data.message) {
+                    setErrorMsg(error.response.data.message);
+                } else {
+                    setErrorMsg(error.response.data.error);
+                }
             } else {
                 console.error("An unexpected error has occurred")
                 setErrorMsg("An unexpected error has occurred");
@@ -103,46 +107,44 @@ const VerticalTabs = ({ workflowsSpecificationView }) => {
     if(workflowsSpecificationView === null) {
         return <div></div>;
     } else {
-    console.log(workflowsSpecificationView.openAPIWorkflowParserResult)
-
-    return (
-        <Box sx={{ flexGrow: 1, display: 'flex', width: '100%' }} >
-            <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs "
-                sx={{ borderRight: 1, borderColor: 'divider' }}
-            >
-                <Tab label="Workflows" {...a11yProps(0)} />
-                <Tab label="Source Descriptions" {...a11yProps(1)} />
-                <Tab label="Components" {...a11yProps(2)} />
-                <Tab label={
-                    <Box display="flex" alignItems="center">
-                        <div>Info</div>
-                        {!workflowsSpecificationView.openAPIWorkflowParserResult.valid && (
-                            <IconButton size="small">
-                                <ReportProblemIcon sx={{ color: "orange" }} />
-                            </IconButton>
-                        )}
-                    </Box>
-                 } {...a11yProps(2)} />
-            </Tabs>
-            <TabPanel value={value} index={0} >
-                <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <SourceDescriptionsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <ComponentsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} components={workflowsSpecificationView.componentsAsString}/>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                <InfoTabViewer workflowsSpecificationView={workflowsSpecificationView} />
-            </TabPanel>
-        </Box>
-    );
+        return (
+            <Box sx={{ flexGrow: 1, display: 'flex', width: '100%' }} >
+                <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs "
+                    sx={{ borderRight: 1, borderColor: 'divider' }}
+                >
+                    <Tab label="Workflows" {...a11yProps(0)} />
+                    <Tab label="Source Descriptions" {...a11yProps(1)} />
+                    <Tab label="Components" {...a11yProps(2)} />
+                    <Tab label={
+                        <Box display="flex" alignItems="center">
+                            <div>Info</div>
+                            {!workflowsSpecificationView.openAPIWorkflowParserResult.valid && (
+                                <IconButton size="small">
+                                    <ReportProblemIcon sx={{ color: "orange" }} />
+                                </IconButton>
+                            )}
+                        </Box>
+                     } {...a11yProps(2)} />
+                </Tabs>
+                <TabPanel value={value} index={0} >
+                    <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <SourceDescriptionsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <ComponentsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} components={workflowsSpecificationView.componentsAsString}/>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <InfoTabViewer workflowsSpecificationView={workflowsSpecificationView} />
+                </TabPanel>
+            </Box>
+        );
     }
 }
 
