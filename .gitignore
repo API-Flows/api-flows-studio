@@ -6,6 +6,7 @@ target
 dist
 fly.toml
 
+.env
 node_modules/
 test-results/
 playwright-report/
