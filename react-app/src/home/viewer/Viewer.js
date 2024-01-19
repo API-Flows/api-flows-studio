@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Countly from "countly-sdk-web";
 import { useLocation } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
@@ -47,6 +48,8 @@ function Viewer() {
                 console.error("An unexpected error has occurred")
                 setErrorMsg("An unexpected error has occurred");
             }
+
+            Countly.q.push(['log_error', error]);
           });
     }, []);
 
