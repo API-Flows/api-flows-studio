@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Countly from "countly-sdk-web";
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -29,6 +30,13 @@ function Home() {
         const isValidUrl = validator.isURL(url);
 
         if (isValidUrl) {
+            Countly.q.push(['add_event',{
+                "key": "click",
+                "segmentation": {
+                    "action": "submit"
+              }
+            }]);
+
             // Encode the URL before setting it in the state
             const encodedUrl = encodeURIComponent(url);
             navigate("/viewer", { state: { url: encodedUrl } });
@@ -109,7 +117,7 @@ function Home() {
                             </Typography>
                         </Button>
                     </Typography>
-                    
+
             </Container>
 
             <Footer/>
