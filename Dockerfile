@@ -2,6 +2,7 @@ FROM openjdk:17.0.2-jdk-slim
 
 RUN mkdir -p /software
 
+ADD config /software/config
 ADD dist/api-flows-studio.jar /software/api-flows-studio.jar
 
 EXPOSE 8080
