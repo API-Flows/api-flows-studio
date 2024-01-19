@@ -12,7 +12,7 @@ tasks:
     init: |
       npm install
     command: |
-      npm start
+      npm start --host 0.0.0.0 --disable-host-check
       echo Frontend running
 
 ports:
