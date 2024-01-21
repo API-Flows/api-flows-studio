@@ -30,5 +30,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
+      - name: maven-settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: '[{"id": "github", "username": "${MAVEN_REGISTRY_USERNAME}", "password": "${MAVEN_REGISTRY_TOKEN}"}]'
+          githubServer: false
       - name: Maven build
         run: mvn clean package
