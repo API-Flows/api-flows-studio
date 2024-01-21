@@ -106,11 +106,6 @@ function Home() {
                     </form>
 
                 </Box>
-                <Typography variant="body2" color="textSecondary" align="center" p={1}>
-                &nbsp;&nbsp;
-                    <Link href="/raw" color="textSecondary" underline="hover" >(Enter content)</Link>
-                </Typography>
-
 
                 <br/><br/><br/>
 
