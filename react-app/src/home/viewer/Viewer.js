@@ -29,10 +29,33 @@ function Viewer() {
     const location = useLocation();
 
     const url = location.state?.url;
+    const content = location.state?.content;
+
+    const isJson = (str) => {
+        try {
+          JSON.parse(str);
+          return true;
+        } catch (e) {
+          return false;
+        }
+    };
 
     useEffect(() => {
         setErrorMsg(null);
-        axios.post('/api/workflow/view', url)
+
+        let endpoint, payload, contentType;
+        if(url) {
+            endpoint = '/api/workflow/url';
+            payload = url;
+            contentType = 'text/plain';
+
+        } else {
+            endpoint = '/api/workflow/content';
+            payload = content;
+            contentType = isJson(payload) ? 'application/json' : 'application/x-yaml';
+        }
+
+        axios.post(endpoint, payload, {headers: { "Content-Type": contentType} } )
           .then((response) => {
             setWorkflowsSpecificationView(response.data);
           })
@@ -138,7 +161,7 @@ const VerticalTabs = ({ workflowsSpecificationView }) => {
                     <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <SourceDescriptionsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} />
+                    <SourceDescriptionsTabViewer workflowsSpecificationView={workflowsSpecificationView} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <ComponentsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} components={workflowsSpecificationView.componentsAsString}/>

@@ -30,9 +30,16 @@ public class WorkflowService {
 
     private final OpenAPIWorkflowParser parser = new OpenAPIWorkflowParser();
 
-    public WorkflowsSpecificationView get(String url) {
+    public WorkflowsSpecificationView getFromUrl(String url) {
 
-        String content = getFileService().call(url);
+
+        String content;
+
+        if(url.startsWith("file://")) {
+            content = getFileService().getFromFile(url);
+        } else {
+            content = getFileService().call(url);
+        }
 
         if (!getFileService().isValidJson(content) && !getFileService().isValidYaml(content)) {
             log.error("File must be valid JSON or YAML file: " + url);
@@ -54,7 +61,7 @@ public class WorkflowService {
         }
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
-        workflowsSpecificationView.setComponentsAsString(getComponents(result.getOpenAPIWorkflow()));
+        workflowsSpecificationView.setComponentsAsString(getComponents(result));
 
         if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
@@ -65,30 +72,58 @@ public class WorkflowService {
         return workflowsSpecificationView;
     }
 
-    private OpenAPIWorkflowParserResult parse(String url) {
+    public WorkflowsSpecificationView getFromContent(String content) {
 
-        OpenAPIWorkflowParserResult result = parser.parse(url);
+        OpenAPIWorkflowParserResult result = null;
+
+        try {
+            result = parse(content);
+        } catch (Exception e) {
+            log.error("Unexpected error", e);
+            throw new UnexpectedErrorException();
+        }
+
+        if (result == null || result.getOpenAPIWorkflow() == null) {
+            log.error("Unexpected error: openAPIWorkflow is null");
+            throw new UnexpectedErrorException();
+        }
+
+        WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
+        workflowsSpecificationView.setComponentsAsString(getComponents(result));
+
+        if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
+            Info info = result.getOpenAPIWorkflow().getInfo();
+            log.info("Loaded '{} ({})'", info.getTitle(), info.getVersion());
+        }
+
+
+        return workflowsSpecificationView;
+    }
+
+    private OpenAPIWorkflowParserResult parse(String input) {
+
+        OpenAPIWorkflowParserResult result = parser.parse(input);
 
         if (!result.isValid()) {
-            log.warn("Error while parsing {}", url);
+            log.warn("Error while parsing {}", input);
         }
 
         return result;
 
     }
 
-    private String getComponents(OpenAPIWorkflow openAPIWorkflow) {
+    private String getComponents(OpenAPIWorkflowParserResult openAPIWorkflowParserResult) {
 
         String components = null;
 
-        if (openAPIWorkflow != null) {
+        if (openAPIWorkflowParserResult.getOpenAPIWorkflow() != null) {
             try {
-                ObjectMapper objectMapper = getObjectMapper(openAPIWorkflow.isJson());
+                ObjectMapper objectMapper = getObjectMapper(openAPIWorkflowParserResult.isJson());
 
-                JsonNode rootNode = objectMapper.readTree(openAPIWorkflow.getContent());
+                JsonNode rootNode = objectMapper.readTree(openAPIWorkflowParserResult.getContent());
 
                 JsonNode componentsNode = rootNode.path("components");
-                if (componentsNode != null) {
+                if (!componentsNode.isMissingNode()) {
                     components = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(componentsNode);
                 }
             } catch (IOException e) {

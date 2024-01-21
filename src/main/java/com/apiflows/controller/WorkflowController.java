@@ -33,20 +33,18 @@ public class WorkflowController {
     @Autowired
     private WorkflowService workflowService;
 
-    @PostMapping("/view")
-    ResponseEntity<WorkflowsSpecificationView> view(@RequestBody String url) throws UnsupportedEncodingException {
+    @PostMapping("/url")
+    ResponseEntity<WorkflowsSpecificationView> getFromUrl(@RequestBody String url) throws UnsupportedEncodingException {
 
-        url = URLDecoder.decode(url, "UTF-8");
-        log.info("Processing " + url);
-
-//        String url = "https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml";
-//        String url = "./src/test/resources/simple.workflow.yaml";
-        //String url = "./src/test/resources/pet-coupons.workflow.yaml";
-
-        WorkflowsSpecificationView view = workflowService.get(url);
-
+        WorkflowsSpecificationView view = workflowService.getFromUrl(URLDecoder.decode(url, "UTF-8"));
         return new ResponseEntity<>(view, HttpStatus.ACCEPTED);
+    }
 
+    @PostMapping("/content")
+    ResponseEntity<WorkflowsSpecificationView> getFromContent(@RequestBody String content) throws UnsupportedEncodingException {
+        log.info(content);
+        WorkflowsSpecificationView view = workflowService.getFromContent(content);
+        return new ResponseEntity<>(view, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get/{filePath}")

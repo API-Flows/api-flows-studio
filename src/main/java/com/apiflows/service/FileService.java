@@ -17,6 +17,8 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Service
 public class FileService {
@@ -89,6 +91,17 @@ public class FileService {
         }
 
         return res;
+    }
+
+    public String getFromFile(String filepath) {
+        String content;
+        try {
+            content = new String(Files.readAllBytes(Paths.get(filepath)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return content;
     }
 
 }
