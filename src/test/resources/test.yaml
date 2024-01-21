@@ -1,0 +1,61 @@
+workflowsSpec: 1.0.0
+info:
+  title: A purchasing workflow
+  summary: This workflow shows how to purchase a good through a sequence of API calls
+  description: |
+    This workflow walks you through the steps of `searching` for, `selecting`, and `purchasing` an available pet.
+  version: 1.0.1
+sourceDescriptions:
+  - name: retailDescription
+    url: https://compamy.com/api/retail/blob/master/src/main/resources/openapi.yaml
+    type: openapi
+
+workflows:
+  - workflowId: loginUserAndRetrieveGoods
+    summary: Login User and then retrieve goods
+    description: This workflow lays out the steps to login a user and then retrieve goods
+    inputs:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    steps:
+      - stepId: loginStep
+        description: This step demonstrates the user login step
+        operationId: loginUser
+        parameters:
+          # parameters to inject into the loginUser operation (parameter name must be resolvable at the referenced operation and the value is determined using {expression} syntax)
+          - name: username
+            in: query
+            value: $inputs.username
+          - name: password
+            in: query
+            value: $inputs.password
+        successCriteria:
+          # assertions to determine step was successful
+          - condition: $statusCode == 200
+        outputs:
+          # outputs from this step
+          tokenExpires: $response.header.X-Expires-After
+          rateLimit: $response.header.X-Rate-Limit
+          sessionToken: $response.body
+      - stepId: getGoodsStep
+        description: retrieve goods by status from the GET pets endpoint
+        operationRef: https://company.com/api/openapi.json#/paths/users/~findbystatus~1{status}/get
+        dependsOn: loginStep
+        parameters:
+          - name: status
+            in: query
+            value: 'available'
+          - name: Authorization
+            in: header
+            value: $steps.loginUser.outputs.sessionToken
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          # outputs from this step
+          availableGoods: $response.body
+    outputs:
+      available: $steps.getGoodsStep.availableGoods
