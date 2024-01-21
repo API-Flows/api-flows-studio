@@ -23,7 +23,7 @@ const InfoTabViewer = ({ workflowsSpecificationView }) => {
 
 
     const handleOpenFile = () => {
-        window.open(workflowsSpec.location, '_blank');
+        window.open(openAPIWorkflowParserResult.location, '_blank');
     };
 
     return (
@@ -82,8 +82,8 @@ const InfoTabViewer = ({ workflowsSpecificationView }) => {
             </Grid>
             <Grid item xs={10}>
                 <Box display="flex" >
-                    <Typography variant="body1">{workflowsSpec.location}&nbsp;</Typography>
-                    <IconButton sx={{ p: 0 }} onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>
+                    <Typography variant="body1">{openAPIWorkflowParserResult.location}&nbsp;</Typography>
+                    {openAPIWorkflowParserResult.location && <IconButton sx={{ p: 0 }} onClick={handleOpenFile}><OpenInNewIcon fontSize="small" /></IconButton>}
                 </Box>
             </Grid>
             <Grid item xs={1}>

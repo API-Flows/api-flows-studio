@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import validator from 'validator';
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,8 +16,10 @@ import StepDetails from "./StepDetails.js";
 import InputDetails from "./InputDetails.js";
 import OutputDetails from "./OutputDetails.js";
 
-const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
+const SourceDescriptionsTabViewer = ({ workflowsSpecificationView }) => {
 
+    const [workflowsSpec, setWorkflowsSpec] = useState(workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow);
+    const [openAPIWorkflowParserResult, setOpenAPIWorkflowParserResult] = useState(workflowsSpecificationView.openAPIWorkflowParserResult);
     const [selectedCard, setSelectedCard] = useState(null);
 
     const handleCardClick = (cardId) => {
@@ -23,9 +27,16 @@ const SourceDescriptionsTabViewer = ({ workflowsSpec }) => {
     };
 
     const openSourceDescription = (filename) => {
-        const baseUrl = workflowsSpec.location.substring(0, workflowsSpec.location.lastIndexOf('/') + 1);
-        const filepath = baseUrl + filename;
-        window.open(filepath, '_blank');
+        if (validator.isURL(filename)) {
+            window.open(filename, '_blank');
+        } else {
+            let baseUrl = "";
+            if(openAPIWorkflowParserResult.location) {
+                baseUrl = openAPIWorkflowParserResult.location.substring(0, openAPIWorkflowParserResult.location.lastIndexOf('/') + 1);
+            }
+            const filepath = baseUrl + filename;
+            window.open(filepath, '_blank');
+       }
     };
 
     return (
