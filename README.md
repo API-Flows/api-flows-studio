@@ -26,5 +26,5 @@ Clone from the GitHub repository
 ```bash
   git clone https://github.com/API-Flows/api-flows-studio.git
   cd api-flows-studio
-  mvn spring-boot:run
+  mvn spring-boot:run -Dskip.frontend.build=false
 ```
