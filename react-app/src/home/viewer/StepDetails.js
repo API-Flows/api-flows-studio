@@ -120,6 +120,15 @@ const ListParameters = ({ parameters }) => {
         return "n/a";
     };
 
+    const displayValue = (value) => {
+        if (!value.startsWith('$')) {
+            value = '"' + value + '"';
+        }
+
+        return value;
+    };
+
+
     if (parameters != null) {
         return (
         <Accordion sx =  {{ width: "100%"}}>
@@ -193,7 +202,7 @@ const ListParameters = ({ parameters }) => {
                         </Grid>
                         <Grid item xs={10}>
                             <Typography variant="body1" color="text.secondary" align="left">
-                                {selectedParameter.value}
+                                {displayValue(selectedParameter.value)}
                             </Typography>
                         </Grid>
                         </>
