@@ -20,6 +20,8 @@ workflows:
           type: string
         password:
           type: string
+        details:
+          $ref: '#/components/amount'
     steps:
       - stepId: loginStep
         description: This step demonstrates the user login step

@@ -27,7 +27,8 @@ const ListProperties = ({ properties }) => {
             {Object.entries(properties).map(([key, value]) => (
                 <tr>
                     <td align="right" width="20%"><Typography>{key}:</Typography></td>
-                    <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>
+                    {value.type && <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>}
+                    {value.$ref && <td align="left"><Typography>&nbsp;&nbsp;{value.$ref}</Typography></td>}
                 </tr>
             ))}
             </table>
