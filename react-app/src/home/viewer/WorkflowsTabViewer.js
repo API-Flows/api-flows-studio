@@ -93,6 +93,9 @@ const WorkflowsViewer = ({ workflow }) => {
 
     return (
         <>
+            <Typography variant="body2" color="text.secondary" align="center">
+                {workflow.summary}
+            </Typography>
 
 {/* stepper view */}
             <Stepper alternativeLabel activeStep="-1" sx = {{ width: "100%", justifyContent: "center"}}>
