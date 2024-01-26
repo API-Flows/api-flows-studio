@@ -6,18 +6,19 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 
-const InputDetails = ({ inputs }) => {
+const InputDetails = ({ inputs, navigateToTab }) => {
     return (
         <>
-        {inputs && <ListProperties properties={inputs.properties} />}
+        {inputs && <ListProperties properties={inputs.properties} navigateToTab={navigateToTab} />}
         {inputs && <ShowRef $ref={inputs.$ref} />}
         {!inputs && <EmptySection/>}
         </>
     );
 }
 
-const ListProperties = ({ properties }) => {
+const ListProperties = ({ properties, navigateToTab }) => {
     if (properties != null) {
         return (
         <>
@@ -28,7 +29,14 @@ const ListProperties = ({ properties }) => {
                 <tr>
                     <td align="right" width="20%"><Typography>{key}:</Typography></td>
                     {value.type && <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>}
-                    {value.$ref && <td align="left"><Typography>&nbsp;&nbsp;{value.$ref}</Typography></td>}
+                    {value.$ref && !value.$ref.startsWith("#/components") && <td align="left">
+                        <Typography>&nbsp;&nbsp;{value.$ref}</Typography></td>}
+                    {value.$ref && value.$ref.startsWith("#/components") && <td align="left"><Typography>
+                        &nbsp;&nbsp;
+                        <Link onClick={() => navigateToTab(2)} color="default" underline="hover" sx = {{ cursor: 'pointer' }}>
+                            {value.$ref}
+                        </Link>
+                    </Typography></td>}
                 </tr>
             ))}
             </table>
