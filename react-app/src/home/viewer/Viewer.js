@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton';
 
 import Footer from "../../layout/Footer.js";
 import Banner from "../../layout/Banner.js";
+import TabPanel from "./TabPanel.js"
 import WorkflowsTabViewer from "./WorkflowsTabViewer.js"
 import SourceDescriptionsTabViewer from "./SourceDescriptionsTabViewer.js"
 import ComponentsTabViewer from "./ComponentsTabViewer.js"
@@ -90,39 +91,6 @@ function Viewer() {
     );
 }
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            style={ {width: '100%'} }
-            {...other}>
-                {value === index && (
-                <Box sx={{ p: 2 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `vertical-tab-${index}`,
-        'aria-controls': `vertical-tabpanel-${index}`,
-    };
-}
-
 const VerticalTabs = ({ workflowsSpecificationView }) => {
     const [value, setValue] = React.useState(0);
 
@@ -172,6 +140,13 @@ const VerticalTabs = ({ workflowsSpecificationView }) => {
             </Box>
         );
     }
+}
+
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
 }
 
 export default Viewer;
