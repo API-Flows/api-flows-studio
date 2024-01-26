@@ -121,6 +121,28 @@ function Home() {
                             </Typography>
                         </Button>
                     </Typography>
+                    <br/>
+
+                    <Typography variant="body1" style={{ cursor: 'pointer' }}
+                        onClick={() => handlePrefill('https://raw.githubusercontent.com/API-Flows/openapi-workflow-registry/main/root/adyen/adyen-giving.yaml')}
+                    >
+                        <Button variant="outlined" size="small" color="success">
+                            <Typography variant="button" style={{fontFamily: 'YourCustomFont, sans-serif', textTransform: 'none'}}>
+                            Try out the Adyen Giving workflow
+                            </Typography>
+                        </Button>
+                    </Typography>
+                    <br/>
+
+                    <Typography variant="body1" style={{ cursor: 'pointer' }}
+                        onClick={() => handlePrefill('https://raw.githubusercontent.com/API-Flows/openapi-workflow-registry/main/root/adyen/adyen-tokenization')}
+                    >
+                        <Button variant="outlined" size="small" color="success">
+                            <Typography variant="button" style={{fontFamily: 'YourCustomFont, sans-serif', textTransform: 'none'}}>
+                            Try out the Adyen Make Recurring Payments workflow
+                            </Typography>
+                        </Button>
+                    </Typography>
 
             </Container>
 
