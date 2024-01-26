@@ -53,6 +53,7 @@ function Home() {
 
     const handlePrefill = (value) => {
         setUrl(value);
+        inputRef.current.focus();
     };
 
     return (
