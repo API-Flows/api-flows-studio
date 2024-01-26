@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Countly from "countly-sdk-web";
 
 import Container from '@mui/material/Container';
@@ -23,6 +23,7 @@ function Home() {
     const [isValid, setValid] = useState(true);
 
     const navigate = useNavigate()
+    const inputRef = useRef(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -87,7 +88,8 @@ function Home() {
                                 fullWidth
                                 required
                                 variant="standard"
-                                label="Enter URL"/>
+                                label="Enter URL"
+                                inputRef={inputRef}/>
 
                             <IconButton size="small" edge="start" onClick={handleClearText}>
                                 <HighlightOffIcon />
