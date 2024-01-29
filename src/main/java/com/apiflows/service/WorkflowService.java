@@ -106,6 +106,7 @@ public class WorkflowService {
 
         if (!result.isValid()) {
             log.warn("Error while parsing {}", input);
+            log.warn("Errors {}", result.getErrors());
         }
 
         return result;
