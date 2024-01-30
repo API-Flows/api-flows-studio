@@ -145,8 +145,8 @@ const ListParameters = ({ parameters, navigateToTab }) => {
                     {parameters.map((parameter, index) => (
                     <Grid item key={index}>
                         <Chip label={getName(parameter)} onClick={() => handleCardClick(parameter)}
-                         variant={selectedParameter && selectedParameter.name === parameter.name ? 'outlined' : 'filled'}
-                         color={selectedParameter && selectedParameter.name === parameter.name ? 'success' : 'default'} />
+                         variant={selectedParameter === parameter ? 'outlined' : 'filled'}
+                         color={selectedParameter === parameter ? 'success' : 'default'} />
                     </Grid>
                     ))}
                 </Grid>
