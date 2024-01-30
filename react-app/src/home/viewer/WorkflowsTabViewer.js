@@ -147,7 +147,7 @@ const WorkflowsViewer = ({ workflow, navigateToTab }) => {
             <Container maxWidth="xl">
                 {isInput(selectedCard) && (<InputDetails inputs={workflow.inputs} navigateToTab={navigateToTab} />) }
                 {isOutput(selectedCard) && (<OutputDetails outputs={workflow.outputs}/>) }
-                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]}/>) }
+                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} navigateToTab={navigateToTab} />) }
             </Container>
         </>
     );

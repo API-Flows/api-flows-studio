@@ -9,8 +9,9 @@ import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 
-const StepDetails = ({ step }) => {
+const StepDetails = ({ step, navigateToTab }) => {
     return (
         <>
         <Divider/>
@@ -92,7 +93,7 @@ const StepDetails = ({ step }) => {
                 </>
             )}
 
-            <ListParameters parameters={step.parameters} />
+            <ListParameters parameters={step.parameters} navigateToTab={navigateToTab} />
             <ListOutputs outputs={step.outputs} />
             <ListSuccessCriteria successCriteriaList={step.successCriteria} />
             <ListOnSuccess onSuccessList={step.onSuccess} />
@@ -102,7 +103,7 @@ const StepDetails = ({ step }) => {
     );
 }
 
-const ListParameters = ({ parameters }) => {
+const ListParameters = ({ parameters, navigateToTab }) => {
 
     const [selectedParameter, setSelectedParameter] = useState(null);
 
@@ -187,9 +188,15 @@ const ListParameters = ({ parameters }) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={10}>
-                            <Typography variant="body1" color="text.secondary" align="left">
+                            {selectedParameter.$ref && !selectedParameter.$ref.startsWith("#/components") && <Typography variant="body1" color="text.secondary" align="left">
                                 {selectedParameter.$ref}
-                            </Typography>
+                            </Typography>}
+                            {selectedParameter.$ref && selectedParameter.$ref.startsWith("#/components") && <Typography variant="body1" color="text.secondary" align="left">
+                                <Link onClick={() => navigateToTab(2)} color="default" underline="hover" sx = {{ cursor: 'pointer' }}>
+                                    {selectedParameter.$ref}
+                                </Link>
+                            </Typography>}
+
                         </Grid>
                         </>
                     )}
