@@ -27,6 +27,14 @@ const WorkflowsTabViewer = ({ workflowsSpec, navigateToTab }) => {
         setSelectedWorkflow(workflow);
     };
 
+    const navigateToWorkflow = (workflowId) => {
+        workflowsSpec.workflows.forEach((workflow, index) => {
+          if(workflow.workflowId === workflowId) {
+            setSelectedWorkflow(workflowsSpec.workflows[index]);
+          }
+        });
+    };
+
     return (
         <>
             <Box
@@ -55,13 +63,13 @@ const WorkflowsTabViewer = ({ workflowsSpec, navigateToTab }) => {
                 </Box>
             <br/>
 
-            {selectedWorkflow && <WorkflowsViewer workflow={selectedWorkflow} navigateToTab={navigateToTab} />}
+            {selectedWorkflow && <WorkflowsViewer workflow={selectedWorkflow} navigateToTab={navigateToTab} navigateToWorkflow={navigateToWorkflow} />}
 
         </>
     );
 }
 
-const WorkflowsViewer = ({ workflow, navigateToTab }) => {
+const WorkflowsViewer = ({ workflow, navigateToTab, navigateToWorkflow }) => {
 
     const [selectedCard, setSelectedCard] = useState(null);
 
@@ -147,7 +155,7 @@ const WorkflowsViewer = ({ workflow, navigateToTab }) => {
             <Container maxWidth="xl">
                 {isInput(selectedCard) && (<InputDetails inputs={workflow.inputs} navigateToTab={navigateToTab} />) }
                 {isOutput(selectedCard) && (<OutputDetails outputs={workflow.outputs}/>) }
-                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} navigateToTab={navigateToTab} />) }
+                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} navigateToTab={navigateToTab} navigateToWorkflow={navigateToWorkflow} />) }
             </Container>
         </>
     );

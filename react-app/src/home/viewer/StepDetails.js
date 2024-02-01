@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 
-const StepDetails = ({ step, navigateToTab }) => {
+const StepDetails = ({ step, navigateToTab, navigateToWorkflow }) => {
     return (
         <>
         <Divider/>
@@ -63,7 +63,9 @@ const StepDetails = ({ step, navigateToTab }) => {
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1" align="left">
-                        {step.workflowId}
+                        <Link onClick={() => navigateToWorkflow(step.workflowId)} color="default" underline="hover" sx = {{ cursor: 'pointer' }}>
+                            {step.workflowId}
+                        </Link>
                     </Typography>
                 </Grid>
                 </>
