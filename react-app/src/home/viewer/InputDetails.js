@@ -28,30 +28,32 @@ const ListProperties = ({ properties, navigateToTab }) => {
             {Object.entries(properties).map(([key, value]) => (
                 <>
                 <tr>
-                    <td align="center"><Typography>{key}</Typography></td>
+                    <td colspan="3" align="left"><Typography>{key}</Typography></td>
                 </tr>
                 <tr>
-                    <td align="right" width="20%"><Typography>type:</Typography></td>
-                    {value.type && <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>}
-                    {value.$ref && !value.$ref.startsWith("#/components") && <td align="left">
-                        <Typography>&nbsp;&nbsp;{value.$ref}</Typography></td>}
-                    {value.$ref && value.$ref.startsWith("#/components") && <td align="left"><Typography>
-                        &nbsp;&nbsp;
+                    <td align="left" valign="top" width="1%"></td>
+                    <td align="right" valign="top" width="10%"><Typography>type:</Typography></td>
+                    {value.type && <td align="left" valign="top" ><Typography>{value.type}</Typography></td>}
+                    {value.$ref && !value.$ref.startsWith("#/components") && <td align="left" valign="top" >
+                        <Typography>{value.$ref}</Typography></td>}
+                    {value.$ref && value.$ref.startsWith("#/components") && <td align="left" valign="top" ><Typography>
                         <Link onClick={() => navigateToTab(2)} color="default" underline="hover" sx = {{ cursor: 'pointer' }}>
                             {value.$ref}
                         </Link>
                     </Typography></td>}
                 </tr>
                 {value.format && <tr>
-                    <td align="right" width="20%"><Typography>format:</Typography></td>
-                    <td align="left"><Typography>&nbsp;&nbsp;{value.format}</Typography></td>
+                    <td align="left" valign="top" width="1%"></td>
+                    <td align="right" valign="top" width="10%"><Typography>format:</Typography></td>
+                    <td align="left" valign="top" ><Typography>{value.format}</Typography></td>
                 </tr>}
                 {value.description && <tr>
-                    <td align="right" width="20%"><Typography>description:</Typography></td>
-                    <td align="left"><Typography>&nbsp;&nbsp;{value.description}</Typography></td>
+                    <td align="left" valign="top" width="1%"></td>
+                    <td align="right" valign="top" width="10%"><Typography>description:</Typography></td>
+                    <td align="left" valign="top" ><Typography>{value.description}</Typography></td>
                 </tr>}
                 <tr>
-                    <td colspan="2">&nbsp;</td>
+                    <td colspan="3">&nbsp;</td>
                 </tr>
                 </>
             ))}
@@ -71,7 +73,7 @@ const ShowRef = ({ $ref }) => {
             <table width="100%">
             <tr>
                 <td align="right" width="20%"><Typography>$ref:</Typography></td>
-                <td align="left"><Typography>&nbsp;&nbsp;{$ref}</Typography></td>
+                <td align="left"><Typography>{$ref}</Typography></td>
             </tr>
             </table>
         </Grid>
