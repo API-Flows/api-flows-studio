@@ -26,8 +26,12 @@ const ListProperties = ({ properties, navigateToTab }) => {
          <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <table width="100%">
             {Object.entries(properties).map(([key, value]) => (
+                <>
                 <tr>
-                    <td align="right" width="20%"><Typography>{key}:</Typography></td>
+                    <td align="center"><Typography>{key}</Typography></td>
+                </tr>
+                <tr>
+                    <td align="right" width="20%"><Typography>type:</Typography></td>
                     {value.type && <td align="left"><Typography>&nbsp;&nbsp;{value.type}</Typography></td>}
                     {value.$ref && !value.$ref.startsWith("#/components") && <td align="left">
                         <Typography>&nbsp;&nbsp;{value.$ref}</Typography></td>}
@@ -38,6 +42,18 @@ const ListProperties = ({ properties, navigateToTab }) => {
                         </Link>
                     </Typography></td>}
                 </tr>
+                {value.format && <tr>
+                    <td align="right" width="20%"><Typography>format:</Typography></td>
+                    <td align="left"><Typography>&nbsp;&nbsp;{value.format}</Typography></td>
+                </tr>}
+                {value.description && <tr>
+                    <td align="right" width="20%"><Typography>description:</Typography></td>
+                    <td align="left"><Typography>&nbsp;&nbsp;{value.description}</Typography></td>
+                </tr>}
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+                </>
             ))}
             </table>
         </Grid>
