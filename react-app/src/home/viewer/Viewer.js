@@ -130,7 +130,8 @@ const VerticalTabs = ({ workflowsSpecificationView }) => {
                      } {...a11yProps(2)} />
                 </Tabs>
                 <TabPanel value={value} index={0} >
-                    <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} navigateToTab={navigateToTab} />
+                    <WorkflowsTabViewer workflowsSpec={workflowsSpecificationView.openAPIWorkflowParserResult.openAPIWorkflow} navigateToTab={navigateToTab}
+                        operationExamples={workflowsSpecificationView.operationExamples} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <SourceDescriptionsTabViewer workflowsSpecificationView={workflowsSpecificationView} />

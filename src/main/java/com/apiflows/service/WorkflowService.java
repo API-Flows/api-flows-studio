@@ -2,8 +2,8 @@ package com.apiflows.service;
 
 import com.apiflows.exception.InvalidContentException;
 import com.apiflows.exception.UnexpectedErrorException;
-import com.apiflows.exception.UrlNotFoundException;
-import com.apiflows.model.*;
+import com.apiflows.model.Info;
+import com.apiflows.model.WorkflowsSpecificationView;
 import com.apiflows.parser.OpenAPIWorkflowParser;
 import com.apiflows.parser.OpenAPIWorkflowParserResult;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -62,6 +62,7 @@ public class WorkflowService {
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result));
+        workflowsSpecificationView.setOperationExamples(new OpenApiExampleService().getOperationExamples(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
 
         if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
@@ -90,6 +91,8 @@ public class WorkflowService {
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result));
+        workflowsSpecificationView.setOperationExamples(new OpenApiExampleService().getOperationExamples(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
+
 
         if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
@@ -99,6 +102,9 @@ public class WorkflowService {
 
         return workflowsSpecificationView;
     }
+
+
+
 
     private OpenAPIWorkflowParserResult parse(String input) {
 
@@ -151,7 +157,6 @@ public class WorkflowService {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
 
         return objectMapper;
     }

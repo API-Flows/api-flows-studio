@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -10,8 +10,16 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
-const StepDetails = ({ step, navigateToTab, navigateToWorkflow }) => {
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
+const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationExamples }) => {
+
     return (
         <>
         <Divider/>
@@ -23,7 +31,7 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow }) => {
             </Grid>
             <Grid item xs={10}>
                 <Typography variant="body1" align="left">
-                    {step.stepId}
+                    {step.stepId}&nbsp;&nbsp;&nbsp;{operationExamples && Object.entries(operationExamples).length > 0 && <ShowExamples operationId={step.operationId} operationExamples={operationExamples} />}
                 </Typography>
             </Grid>
             {step.operationId !== null && (
@@ -103,6 +111,78 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow }) => {
         </Grid>
         </>
     );
+}
+
+const ShowExamples = ({ operationId, operationExamples }) => {
+
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState();
+
+    const handleClickOpenDialog = () => {
+        // reset selectedValue to first example
+        setSelectedValue(operationExamples[operationId][0].name);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleSelectChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+
+    const getJsonExample = () => {
+         const selectedExample = operationExamples[operationId].find(example => example.name === selectedValue);
+         return selectedExample ? selectedExample.example : "";
+    };
+
+    return (
+        <>
+        <Link onClick={() => handleClickOpenDialog()}  sx = {{ cursor: 'pointer' }}>
+            (Examples)
+        </Link>
+
+        <Dialog
+            maxWidth="lg"
+            open={open}
+            onClose={handleClose}
+            PaperProps={{ style: { width: '80%', maxWidth: '800px', position: 'absolute', top: '10%', maxHeight: '500px'  } }}>
+
+            <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                    }}
+            >
+                <CloseIcon />
+            </IconButton>
+            <DialogContent dividers="true">
+                <Grid container justifyContent="center">
+                    <Grid item xs={6}>
+                        <Select
+                          displayEmpty
+                          value={selectedValue}
+                          onChange={handleSelectChange}
+                          fullWidth
+                          scroll="paper"
+                        >
+                            {operationExamples[operationId].map((example, index) => (
+                                <MenuItem value={example.name}>{example.name}</MenuItem>
+                            ))};
+                        </Select>
+                    </Grid>
+                </Grid>
+                <pre style={{ fontSize: "small" }}>{getJsonExample()}</pre>
+            </DialogContent>
+        </Dialog>
+        </>
+    );
+
 }
 
 const ListParameters = ({ parameters, navigateToTab }) => {
