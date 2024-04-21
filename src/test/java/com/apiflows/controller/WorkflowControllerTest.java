@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,9 +42,11 @@ class WorkflowControllerTest {
     }
 
     String getContentFromFile() throws Exception {
-        String filePath = "pet-coupons.workflow.yaml";
-        byte[] encodedBytes = Files.readAllBytes(Paths.get(this.getClass().getClassLoader().getResource(filePath).toURI()));
+        String filePath = "src/test/resources/pet-coupons.workflow.yaml";
 
+        Path fullPath = Paths.get(filePath).toAbsolutePath();
+
+        byte[] encodedBytes = Files.readAllBytes(fullPath);
         return new String(encodedBytes, StandardCharsets.UTF_8);
     }
 }
