@@ -42,7 +42,6 @@ public class WorkflowController {
 
     @PostMapping("/content")
     ResponseEntity<WorkflowsSpecificationView> getFromContent(@RequestBody String content) throws UnsupportedEncodingException {
-        log.info(content);
         WorkflowsSpecificationView view = workflowService.getFromContent(content);
         return new ResponseEntity<>(view, HttpStatus.ACCEPTED);
     }
@@ -66,4 +65,11 @@ public class WorkflowController {
                 .body(fileContent);
     }
 
+    public WorkflowService getWorkflowService() {
+        return workflowService;
+    }
+
+    public void setWorkflowService(WorkflowService workflowService) {
+        this.workflowService = workflowService;
+    }
 }

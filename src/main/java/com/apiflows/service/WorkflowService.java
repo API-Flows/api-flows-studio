@@ -32,7 +32,6 @@ public class WorkflowService {
 
     public WorkflowsSpecificationView getFromUrl(String url) {
 
-
         String content;
 
         if(url.startsWith("file://")) {
@@ -102,9 +101,6 @@ public class WorkflowService {
 
         return workflowsSpecificationView;
     }
-
-
-
 
     private OpenAPIWorkflowParserResult parse(String input) {
 
