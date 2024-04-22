@@ -49,37 +49,38 @@ public class OpenApiExampleService {
 
                     }
                 } catch (Exception e) {
-                    log.error("Cannot find or parse source description: " + sourceDescription.getUrl(), e);
-                    throw new RuntimeException("Cannot find or parse source description: " + sourceDescription.getUrl());
+                    log.warn("Cannot find or parse source description: " + sourceDescription.getUrl(), e);
                 }
 
-                for (PathItem pathItem : parseResult.getOpenAPI().getPaths().values()) {
-                    for (Operation operation : pathItem.readOperations()) {
+                if(parseResult != null) {
+                    for (PathItem pathItem : parseResult.getOpenAPI().getPaths().values()) {
+                        for (Operation operation : pathItem.readOperations()) {
 
-                        List<OperationExample> operationExamples = new ArrayList<>();
+                            List<OperationExample> operationExamples = new ArrayList<>();
 
-                        if (operation.getRequestBody() != null) {
-                            SwaggerParseResult finalParseResult = parseResult;
-                            Content content = operation.getRequestBody().getContent();
+                            if (operation.getRequestBody() != null) {
+                                SwaggerParseResult finalParseResult = parseResult;
+                                Content content = operation.getRequestBody().getContent();
 
-                            for (Map.Entry<String, MediaType> entry : content.entrySet()) {
-                                String key = entry.getKey();
-                                MediaType value = entry.getValue();
+                                for (Map.Entry<String, MediaType> entry : content.entrySet()) {
+                                    String key = entry.getKey();
+                                    MediaType value = entry.getValue();
 
-                                if (key.equals("application/json")) {
-                                    if (value.getExample() != null && value.getExample() instanceof Example) {
-                                        operationExamples.add(getExampleAsString((Example) value.getExample()));
-                                    } else if (value.getExamples() != null) {
-                                        operationExamples.addAll(getExamplesAsString(value.getExamples(), finalParseResult.getOpenAPI().getComponents()));
+                                    if (key.equals("application/json")) {
+                                        if (value.getExample() != null && value.getExample() instanceof Example) {
+                                            operationExamples.add(getExampleAsString((Example) value.getExample()));
+                                        } else if (value.getExamples() != null) {
+                                            operationExamples.addAll(getExamplesAsString(value.getExamples(), finalParseResult.getOpenAPI().getComponents()));
+                                        }
                                     }
+                                }
+
+                                if (!operationExamples.isEmpty()) {
+                                    map.put(operation.getOperationId(), operationExamples);
                                 }
                             }
 
-                            if (!operationExamples.isEmpty()) {
-                                map.put(operation.getOperationId(), operationExamples);
-                            }
                         }
-
                     }
                 }
 
