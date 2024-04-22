@@ -52,7 +52,7 @@ public class OpenApiExampleService {
                     log.warn("Cannot find or parse source description: " + sourceDescription.getUrl(), e);
                 }
 
-                if(parseResult != null) {
+                if(parseResult != null && parseResult.getOpenAPI() != null) {
                     for (PathItem pathItem : parseResult.getOpenAPI().getPaths().values()) {
                         for (Operation operation : pathItem.readOperations()) {
 
