@@ -10,6 +10,13 @@ import theme from './theme';
 const countlyAppKey = process.env.REACT_APP_COUNTLY_APP_KEY;
 const countlyUrl = process.env.REACT_APP_COUNTLY_URL;
 
+if (!countlyAppKey) {
+    console.log("countlyAppKey is undefined");
+}
+if (!countlyUrl) {
+    console.log("countlyUrl is undefined");
+}
+
 if (countlyAppKey) {
     window.Countly = Countly;
     Countly.init({
