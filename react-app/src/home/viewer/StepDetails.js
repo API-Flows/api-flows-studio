@@ -18,7 +18,7 @@ import Select from '@mui/material/Select';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationExamples }) => {
+const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationDataMap }) => {
 
     return (
         <>
@@ -31,7 +31,8 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationExample
             </Grid>
             <Grid item xs={10}>
                 <Typography variant="body1" align="left">
-                    {step.stepId}&nbsp;&nbsp;&nbsp;{operationExamples && Object.entries(operationExamples).length > 0 && <ShowExamples operationId={step.operationId} operationExamples={operationExamples} />}
+                    {step.stepId}&nbsp;&nbsp;&nbsp;{operationDataMap && operationDataMap[step.operationId] && operationDataMap[step.operationId].hasOperationExamples
+                        && <ShowExamples operationId={step.operationId} operationExamples={operationDataMap[step.operationId].operationExamples} />}
                 </Typography>
             </Grid>
             {step.operationId !== null && (
@@ -42,9 +43,13 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationExample
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="body1" align="left">
-                        {step.operationId}
-                    </Typography>
+                    <Box justifyContent="left" display="flex">
+                        <HttpMethodChip httpMethod={operationDataMap[step.operationId].httpMethod}/>
+                        &nbsp;&nbsp;
+                        <Typography variant="body1" align="left">
+                            {step.operationId}
+                        </Typography>
+                    </Box>
                 </Grid>
                 </>
             )}
@@ -120,7 +125,7 @@ const ShowExamples = ({ operationId, operationExamples }) => {
 
     const handleClickOpenDialog = () => {
         // reset selectedValue to first example
-        setSelectedValue(operationExamples[operationId][0].name);
+        setSelectedValue(operationExamples[0].name);
         setOpen(true);
     };
 
@@ -133,7 +138,7 @@ const ShowExamples = ({ operationId, operationExamples }) => {
     };
 
     const getJsonExample = () => {
-         const selectedExample = operationExamples[operationId].find(example => example.name === selectedValue);
+         const selectedExample = operationExamples.find(example => example.name === selectedValue);
          return selectedExample ? selectedExample.example : "";
     };
 
@@ -171,7 +176,7 @@ const ShowExamples = ({ operationId, operationExamples }) => {
                           fullWidth
                           scroll="paper"
                         >
-                            {operationExamples[operationId].map((example, index) => (
+                            {operationExamples.map((example, index) => (
                                 <MenuItem value={example.name}>{example.name}</MenuItem>
                             ))};
                         </Select>
@@ -524,6 +529,32 @@ const ListOnFailure = ({ onFailureList }) => {
         </Accordion>
         );
     }
+}
+
+const HttpMethodChip = ({ httpMethod }) => {
+
+    var backgroundColor = "";
+
+    if( httpMethod == 'GET') {
+        backgroundColor = 'green';
+    } else if( httpMethod == 'POST') {
+       backgroundColor = 'blue';
+    } else if( httpMethod == 'PUT') {
+       backgroundColor = 'purple';
+    } else if( httpMethod == 'PATCH') {
+       backgroundColor = 'orange';
+    } else if( httpMethod == 'DELETE') {
+       backgroundColor = 'red';
+    } else {
+       backgroundColor = 'gray';
+    }
+
+    return (
+        <Chip label= {httpMethod}
+            variant='filled'
+            size = 'small'
+            style={{ backgroundColor: backgroundColor, color: 'white' }} />
+    );
 }
 
 export default StepDetails;

@@ -19,7 +19,7 @@ import StepDetails from "./StepDetails.js";
 import InputDetails from "./InputDetails.js";
 import OutputDetails from "./OutputDetails.js";
 
-const WorkflowsTabViewer = ({ workflowsSpec, navigateToTab, operationExamples }) => {
+const WorkflowsTabViewer = ({ workflowsSpec, navigateToTab, operationDataMap }) => {
 
     const [selectedWorkflow, setSelectedWorkflow] = useState(workflowsSpec.workflows[0]);
 
@@ -64,13 +64,13 @@ const WorkflowsTabViewer = ({ workflowsSpec, navigateToTab, operationExamples })
             <br/>
 
             {selectedWorkflow && <WorkflowsViewer workflow={selectedWorkflow} navigateToTab={navigateToTab} navigateToWorkflow={navigateToWorkflow}
-                operationExamples={operationExamples} />}
+                operationDataMap={operationDataMap} />}
 
         </>
     );
 }
 
-const WorkflowsViewer = ({ workflow, navigateToTab, navigateToWorkflow, operationExamples }) => {
+const WorkflowsViewer = ({ workflow, navigateToTab, navigateToWorkflow, operationDataMap }) => {
 
     const [selectedCard, setSelectedCard] = useState(null);
 
@@ -156,7 +156,7 @@ const WorkflowsViewer = ({ workflow, navigateToTab, navigateToWorkflow, operatio
             <Container maxWidth="xl">
                 {isInput(selectedCard) && (<InputDetails inputs={workflow.inputs} navigateToTab={navigateToTab} />) }
                 {isOutput(selectedCard) && (<OutputDetails outputs={workflow.outputs}/>) }
-                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} navigateToTab={navigateToTab} navigateToWorkflow={navigateToWorkflow} operationExamples={operationExamples} />) }
+                {isStep(selectedCard) && workflow.steps[selectedCard] && (<StepDetails step={workflow.steps[selectedCard]} navigateToTab={navigateToTab} navigateToWorkflow={navigateToWorkflow} operationDataMap={operationDataMap} />) }
             </Container>
         </>
     );
