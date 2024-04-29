@@ -11,7 +11,7 @@ public class WorkflowsSpecificationView {
 
     private OpenAPIWorkflowParserResult openAPIWorkflowParserResult = null;
     private String componentsAsString = null;
-    private Map<String, List<OperationExample>> operationExamples = new HashMap<>();
+    private Map<String, OperationData> operationDataMap = new HashMap<>();
 
     public WorkflowsSpecificationView() {
     }
@@ -36,11 +36,11 @@ public class WorkflowsSpecificationView {
         this.componentsAsString = componentsAsString;
     }
 
-    public Map<String, List<OperationExample>> getOperationExamples() {
-        return operationExamples;
+    public Map<String, OperationData> getOperationDataMap() {
+        return operationDataMap;
     }
 
-    public void setOperationExamples(Map<String, List<OperationExample>> operationExamples) {
-        this.operationExamples = operationExamples;
+    public void setOperationDataMap(Map<String, OperationData> operationDataMap) {
+        this.operationDataMap = operationDataMap;
     }
 }

@@ -61,8 +61,7 @@ public class WorkflowService {
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result));
-        workflowsSpecificationView.setOperationExamples(new OpenApiExampleService().getOperationExamples(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
-
+        workflowsSpecificationView.setOperationDataMap(new OpenApiOperationService().getOperationData(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
         if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
             log.info("Loaded '{} ({})'", info.getTitle(), info.getVersion());
@@ -90,8 +89,7 @@ public class WorkflowService {
 
         WorkflowsSpecificationView workflowsSpecificationView = new WorkflowsSpecificationView(result);
         workflowsSpecificationView.setComponentsAsString(getComponents(result));
-        workflowsSpecificationView.setOperationExamples(new OpenApiExampleService().getOperationExamples(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
-
+        workflowsSpecificationView.setOperationDataMap(new OpenApiOperationService().getOperationData(result.getOpenAPIWorkflow().getSourceDescriptions(), result.getLocation()));
 
         if (result.getOpenAPIWorkflow() != null && result.getOpenAPIWorkflow().getInfo() != null) {
             Info info = result.getOpenAPIWorkflow().getInfo();
