@@ -10,14 +10,7 @@ import theme from './theme';
 const countlyAppKey = process.env.REACT_APP_COUNTLY_APP_KEY;
 const countlyUrl = process.env.REACT_APP_COUNTLY_URL;
 
-if (!countlyAppKey) {
-    console.log("countlyAppKey is undefined");
-}
-if (!countlyUrl) {
-    console.log("countlyUrl is undefined");
-}
-
-if (countlyAppKey) {
+if (window.location.hostname != "localhost") {
     window.Countly = Countly;
     Countly.init({
         app_key: countlyAppKey,
@@ -31,6 +24,9 @@ if (countlyAppKey) {
     Countly.q.push(['track_links']);
     Countly.q.push(["track_errors"]);
 }
+ else {
+    console.log("Skip Countly on localhost");
+ }
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
