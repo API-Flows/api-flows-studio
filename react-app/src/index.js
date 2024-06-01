@@ -10,7 +10,7 @@ import theme from './theme';
 const countlyAppKey = process.env.REACT_APP_COUNTLY_APP_KEY;
 const countlyUrl = process.env.REACT_APP_COUNTLY_URL;
 
-if (window.location.hostname != "localhost") {
+if (window.location.hostname !== "localhost") {
     window.Countly = Countly;
     Countly.init({
         app_key: countlyAppKey,
