@@ -113,11 +113,11 @@ function Home() {
                 <br/><br/><br/>
 
                     <Typography variant="body1" style={{ cursor: 'pointer' }}
-                        onClick={() => handlePrefill('https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml')}
+                        onClick={() => handlePrefill('https://raw.githubusercontent.com/OAI/Arazzo-Specification/main/examples/1.0.0/pet-coupons.arazzo.yaml')}
                     >
                         <Button variant="outlined" size="small" color="success">
                             <Typography variant="button" style={{fontFamily: 'YourCustomFont, sans-serif', textTransform: 'none'}}>
-                            Try out the OpenAPI example 'Petstore - Apply Coupons'
+                            Try out the Arazzo example 'Petstore - Apply Coupons'
                             </Typography>
                         </Button>
                     </Typography>

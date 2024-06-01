@@ -8,7 +8,7 @@ class FileServiceTest {
 
     @Test
     void checkUrlExists() {
-        final String URL = "https://raw.githubusercontent.com/OAI/sig-workflows/main/examples/1.0.0/pet-coupons.workflow.yaml";
+        final String URL = "https://github.com/API-Flows/openapi-workflow-parser/blob/main/src/test/resources/1.0.0/pet-coupons.arazzo.yaml";
         assertTrue(new FileService().checkUrlExists(URL));
     }
 
