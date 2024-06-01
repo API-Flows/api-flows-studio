@@ -45,6 +45,7 @@ public class FileService {
 
             return true;
         } catch (Exception e) {
+            log.warn("Invalid JSON file", e);
             return false;
         }
     }
@@ -56,6 +57,7 @@ public class FileService {
 
             return root.get("workflowsSpec") != null ? true : false;
         } catch (Exception e) {
+            log.warn("Invalid YAML file", e);
             return false;
         }
     }
