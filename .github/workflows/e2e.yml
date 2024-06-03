@@ -1,0 +1,59 @@
+name: E2E
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - README.md
+      - .gitignore
+      - .gitpod.yml
+      - LICENSE
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - README.md
+      - .gitignore
+      - .gitpod.yml
+      - LICENSE
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build backend
+      run: mvn package
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Start backend
+      run: mvn spring-boot:run &
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+    - name: Build frontend
+      run: npm install
+      working-directory: ./react-app
+    - name: Run frontend
+      run: npm start &
+      working-directory: ./react-app
+    - name: Wait for services to be available
+      run: |
+        # Wait for Spring Boot
+        while ! nc -z localhost 8080; do sleep 1; done
+        # Wait for React
+        while ! nc -z localhost 3000; do sleep 1; done
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./e2e
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+      working-directory: ./e2e
+    - name: Run Playwright tests
+      run: npx playwright test
+      working-directory: ./e2e
