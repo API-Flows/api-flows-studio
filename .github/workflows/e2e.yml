@@ -26,16 +26,28 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn package -Dskip.frontend.build=false
+    - name: Build backend
+      run: mvn package
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Run
+    - name: Start backend
       run: mvn spring-boot:run &
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
+    - name: Build frontend
+      run: npm install
+      working-directory: ./react-app
+    - name: Run frontend
+      run: npm start &
+      working-directory: ./react-app
+    - name: Wait for services to be available
+      run: |
+        # Wait for Spring Boot
+        while ! nc -z localhost 8080; do sleep 1; done
+        # Wait for React
+        while ! nc -z localhost 3000; do sleep 1; done
     - name: Install dependencies
       run: npm ci
       working-directory: ./e2e
