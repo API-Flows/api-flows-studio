@@ -28,6 +28,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn package -Dskip.frontend.build=false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Run
       run: mvn spring-boot:run &
     - name: Set up Node.js
