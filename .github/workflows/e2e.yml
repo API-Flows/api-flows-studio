@@ -28,9 +28,13 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn spring-boot:run -Dskip.frontend.build=false &
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
+    - name: Install Playwright Browser(s)
       run: npx playwright install chromium --with-deps
     - name: Run Playwright tests
       run: npx playwright test
