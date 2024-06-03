@@ -32,7 +32,7 @@ class FileServiceTest {
 
     @Test
     void checkValidYaml() {
-        final String CONTENT = "workflowsSpec: 1.0.0\n" +
+        final String CONTENT = "arazzo: 1.0.0\n" +
                 "info:\n" +
                 "  title: simple\n" +
                 "  version: v1\n";
