@@ -23,7 +23,7 @@ class WorkflowControllerTest {
     @Test
     public void testGetFromUrl() throws Exception {
 
-        final String URL = "https://raw.githubusercontent.com/API-Flows/api-flows-studio/main/src/test/resources/pet-coupons.workflow.yaml";
+        final String URL = "https://raw.githubusercontent.com/API-Flows/api-flows-studio/main/src/test/resources/pet-coupons.arazzo.yaml";
 
         ResponseEntity<WorkflowsSpecificationView> responseEntity = workflowController.getFromUrl(URL);
 
@@ -41,7 +41,7 @@ class WorkflowControllerTest {
     }
 
     String getContentFromFile() throws Exception {
-        String filePath = "src/test/resources/pet-coupons.workflow.yaml";
+        String filePath = "src/test/resources/pet-coupons.arazzo.yaml";
 
         Path fullPath = Paths.get(filePath).toAbsolutePath();
 
