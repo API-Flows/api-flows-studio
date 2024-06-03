@@ -1,4 +1,4 @@
-workflowsSpec: 1.0.0
+arazzo: 1.0.0
 info:
   title: A purchasing workflow
   summary: This workflow shows how to purchase a good through a sequence of API calls

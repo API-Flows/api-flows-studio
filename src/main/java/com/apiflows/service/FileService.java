@@ -55,7 +55,7 @@ public class FileService {
             ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
             JsonNode root = objectMapper.readTree(content);
 
-            return root.get("workflowsSpec") != null ? true : false;
+            return root.get("arazzo") != null ? true : false;
         } catch (Exception e) {
             log.warn("Invalid YAML file", e);
             return false;
