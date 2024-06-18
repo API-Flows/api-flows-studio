@@ -3,18 +3,13 @@ import React, { useState } from "react";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { StepIcon } from '@mui/material';
 import CircleTwoToneIcon from '@mui/icons-material/CircleTwoTone';
 import CircleSharpIcon from '@mui/icons-material/CircleSharp';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import Grid from '@mui/material/Grid';
 
-import InputCard from "./InputCard.js";
-import StepCard from "./StepCard.js";
-import OutputCard from "./OutputCard.js";
 import StepDetails from "./StepDetails.js";
 import InputDetails from "./InputDetails.js";
 import OutputDetails from "./OutputDetails.js";

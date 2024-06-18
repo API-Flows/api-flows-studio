@@ -5,9 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';

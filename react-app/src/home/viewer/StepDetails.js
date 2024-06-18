@@ -351,7 +351,7 @@ const ListOutputs = ({ outputs }) => {
             <AccordionDetails>
             <Grid container spacing={1}>
             {Object.entries(outputs).map(([key, value]) => (
-                <>
+                <div id={{key}}>
                 <Grid item xs={2}>
                     <Typography variant="body1" color="text.secondary" align="left">
                         {key}:
@@ -362,7 +362,7 @@ const ListOutputs = ({ outputs }) => {
                         {value}
                     </Typography>
                 </Grid>
-                </>
+                </div>
             ))}
             </Grid>
             </AccordionDetails>
@@ -535,15 +535,15 @@ const HttpMethodChip = ({ httpMethod }) => {
 
     var backgroundColor = "";
 
-    if( httpMethod == 'GET') {
+    if( httpMethod === 'GET') {
         backgroundColor = 'green';
-    } else if( httpMethod == 'POST') {
+    } else if( httpMethod === 'POST') {
        backgroundColor = 'blue';
-    } else if( httpMethod == 'PUT') {
+    } else if( httpMethod === 'PUT') {
        backgroundColor = 'purple';
-    } else if( httpMethod == 'PATCH') {
+    } else if( httpMethod === 'PATCH') {
        backgroundColor = 'orange';
-    } else if( httpMethod == 'DELETE') {
+    } else if( httpMethod === 'DELETE') {
        backgroundColor = 'red';
     } else {
        backgroundColor = 'gray';

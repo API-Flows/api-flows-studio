@@ -1,17 +1,7 @@
 import React, { useState } from "react";
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-
-import InputCard from "./InputCard.js";
-import StepCard from "./StepCard.js";
-import OutputCard from "./OutputCard.js";
-import StepDetails from "./StepDetails.js";
-import InputDetails from "./InputDetails.js";
-import OutputDetails from "./OutputDetails.js";
 
 const ComponentsTabViewer = ({ workflowsSpec, components }) => {
 

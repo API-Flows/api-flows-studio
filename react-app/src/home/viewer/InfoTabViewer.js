@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -13,8 +12,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
-import Divider from '@mui/material/Divider';
 
 const InfoTabViewer = ({ workflowsSpecificationView }) => {
 
