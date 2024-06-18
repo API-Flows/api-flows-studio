@@ -18,6 +18,7 @@ const ShowOutputDetails = ({ outputs }) => {
     return (
         <>
         <Divider/>
+
         <Grid container spacing={2} sx={{ padding: 2, textAlign: 'center' }}>
             <table width="100%">
             {Object.entries(outputs).map(([key, value]) => (
@@ -32,7 +33,7 @@ const ShowOutputDetails = ({ outputs }) => {
     );
 }
 
-const EmptySection = ({ }) => {
+const EmptySection = () => {
         return (
         <>
             <Divider/>
