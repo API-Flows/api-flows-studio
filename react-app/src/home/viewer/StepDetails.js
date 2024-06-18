@@ -352,7 +352,7 @@ const ListOutputs = ({ outputs }) => {
             <AccordionDetails>
             <Grid container spacing={1}>
             {Object.entries(outputs).map(([key, value]) => (
-                <div id={{key}}>
+            <>
                 <Grid item xs={2}>
                     <Typography variant="body1" color="text.secondary" align="left">
                         {key}:
@@ -363,7 +363,7 @@ const ListOutputs = ({ outputs }) => {
                         {value}
                     </Typography>
                 </Grid>
-                </div>
+            </>
             ))}
             </Grid>
             </AccordionDetails>
