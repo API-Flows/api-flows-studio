@@ -12,7 +12,7 @@
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.0.0",
     "axios": "^1.6.0",
-    "countly-sdk-web": "^23.12.4",
+    "countly-sdk-web": "^24.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
