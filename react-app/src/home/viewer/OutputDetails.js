@@ -38,7 +38,7 @@ const EmptySection = ({ }) => {
             <Divider/>
             <br/>
             <Box display="flex" justifyContent="center">
-                <Typography>No Outputs is defined</Typography>
+                <Typography>No Outputs are defined</Typography>
             </Box>
         </>
         );
