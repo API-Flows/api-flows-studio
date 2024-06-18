@@ -199,11 +199,12 @@ const ListParameters = ({ parameters, navigateToTab }) => {
     };
 
     const getName = (parameter) => {
-        if (parameter.name !== null) {
+        if (parameter !== null && parameter.name !== null) {
             return parameter.name;
         }
-        if (parameter.$ref !== null) {
-            return parameter.$ref.substring(parameter.$ref.lastIndexOf('/') + 1);
+
+        if (parameter !== null && parameter.reference !== null) {
+            return parameter.reference.substring(parameter.reference.lastIndexOf('/') + 1);
         }
         return "n/a";
     };
@@ -267,20 +268,20 @@ const ListParameters = ({ parameters, navigateToTab }) => {
                         </Grid>
                         </>
                     )}
-                    {selectedParameter.$ref !== null && (
+                    {selectedParameter.reference !== null && (
                         <>
                         <Grid item xs={2}>
                             <Typography variant="body1" color="text.secondary" align="left">
-                                $ref:
+                                reference:
                             </Typography>
                         </Grid>
                         <Grid item xs={10}>
-                            {selectedParameter.$ref && !selectedParameter.$ref.startsWith("#/components") && <Typography variant="body1" color="text.secondary" align="left">
-                                {selectedParameter.$ref}
+                            {selectedParameter.reference && !selectedParameter.reference.startsWith("$components") && <Typography variant="body1" color="text.secondary" align="left">
+                                {selectedParameter.reference}
                             </Typography>}
-                            {selectedParameter.$ref && selectedParameter.$ref.startsWith("#/components") && <Typography variant="body1" color="text.secondary" align="left">
+                            {selectedParameter.reference && selectedParameter.reference.startsWith("$components") && <Typography variant="body1" color="text.secondary" align="left">
                                 <Link onClick={() => navigateToTab(2)} color="default" underline="hover" sx = {{ cursor: 'pointer' }}>
-                                    {selectedParameter.$ref}
+                                    {selectedParameter.reference}
                                 </Link>
                             </Typography>}
 
