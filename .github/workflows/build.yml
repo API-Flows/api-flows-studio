@@ -33,7 +33,7 @@ jobs:
       - name: maven-settings
         uses: s4u/maven-settings-action@v3.0.0
         with:
-          servers: '[{"id": "github", "username": "${{ secrets.MAVEN_REGISTRY_USERNAME }}", "password": "${{ secrets.MAVEN_REGISTRY_TOKEN }}"}]'
+          servers: '[{"id": "github", "username": "test", "password": "${{ secrets.MAVEN_REGISTRY_TOKEN }}"}]'
           githubServer: false
       - name: Maven build
         run: mvn clean package
