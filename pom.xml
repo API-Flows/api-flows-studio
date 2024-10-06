@@ -49,7 +49,7 @@
     <dependency>
       <groupId>com.api-flows</groupId>
       <artifactId>openapi-workflow-parser</artifactId>
-      <version>0.0.3-SNAPSHOT</version>
+      <version>0.0.4-SNAPSHOT</version>
     </dependency>
 
     <dependency>

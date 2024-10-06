@@ -20,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationDataMap }) => {
 
+console.log('Step content:', step);
     return (
         <>
         <Divider/>
@@ -44,7 +45,9 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationDataMap
                 </Grid>
                 <Grid item xs={10}>
                     <Box justifyContent="left" display="flex">
+                        {operationDataMap[step.operationId] != null && (
                         <HttpMethodChip httpMethod={operationDataMap[step.operationId].httpMethod}/>
+                        )}
                         &nbsp;&nbsp;
                         <Typography variant="body1" align="left">
                             {step.operationId}
@@ -53,16 +56,16 @@ const StepDetails = ({ step, navigateToTab, navigateToWorkflow, operationDataMap
                 </Grid>
                 </>
             )}
-            {step.operationRef !== null && (
+            {step.operationPath !== null && (
                 <>
                 <Grid item xs={2}>
                     <Typography variant="body1" align="left">
-                        operationRef:
+                        operationPath:
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
                     <Typography variant="body1" align="left">
-                        {step.operationRef}
+                        {step.operationPath}
                     </Typography>
                 </Grid>
                 </>
