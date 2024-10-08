@@ -353,7 +353,7 @@ const ListOutputs = ({ outputs }) => {
                 <Typography>Outputs ({Object.keys(outputs).length})</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Grid container spacing={1}>
+            <Grid container spacing={0}>
             {Object.entries(outputs).map(([key, value]) => (
             <>
                 <Grid item xs={2}>
@@ -389,10 +389,10 @@ const ListSuccessCriteria = ({ successCriteriaList }) => {
             <AccordionDetails>
                 {successCriteriaList.map((successCriteria, index) => (
                     <Box display="flex" width="100%">
-                        <Box justifyContent="right" sx={{ p: 1 }}>
+                        <Box justifyContent="right" sx={{ p: 0 }}>
                         -
                         </Box>
-                        <Box justifyContent="left" sx={{ p: 1 }} >
+                        <Box justifyContent="left" sx={{ p: 0 }} >
                             {successCriteria.context && <Typography color="text.secondary" >context: {successCriteria.context}</Typography>}
                             {successCriteria.condition && <Typography color="text.secondary" >condition: {successCriteria.condition}</Typography>}
                             {successCriteria.type && <Typography color="text.secondary" >type: {successCriteria.type}</Typography>}
