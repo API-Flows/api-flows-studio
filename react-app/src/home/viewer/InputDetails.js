@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
+import Chip from '@mui/material/Chip';
+
 
 const InputDetails = ({ inputs, navigateToTab }) => {
     return (
@@ -26,7 +28,9 @@ const ListProperties = ({ properties, navigateToTab }) => {
             {Object.entries(properties).map(([key, value]) => (
                 <>
                 <tr>
-                    <td colspan="3" align="left"><Typography>- {key}</Typography></td>
+                    <td colspan="3" align="left">
+                        <Chip label={key}  />
+                    </td>
                 </tr>
                 <tr>
                     <td align="left" valign="top" width="1%"></td>
