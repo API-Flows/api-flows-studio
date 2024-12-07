@@ -36,4 +36,4 @@ jobs:
           servers: '[{"id": "github", "username": "${{ secrets.MAVEN_REGISTRY_USERNAME }}", "password": "${{ secrets.MAVEN_REGISTRY_TOKEN }}"}]'
           githubServer: false
       - name: Maven build
-        run: mvn clean package
+        run: mvn package
